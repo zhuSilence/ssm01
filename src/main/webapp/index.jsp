@@ -5,7 +5,7 @@
 <body>
 <h2>登录页面</h2>
 <form action="${ctx}/login/login.action" method="post">
-    用户名：<input type="text" name="userName"/>
+    用户名：<input type="text" name="username"/>
     密　码：<input type="password" name="password"/>
     <input type="submit" value="登录"/>
 </form>
