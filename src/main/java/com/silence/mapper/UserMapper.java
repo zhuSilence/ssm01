@@ -3,7 +3,6 @@ package com.silence.mapper;
 import com.silence.po.User;
 
 public interface UserMapper {
-
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
