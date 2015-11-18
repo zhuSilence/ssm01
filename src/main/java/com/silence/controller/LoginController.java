@@ -24,11 +24,11 @@ public class LoginController {
     @RequestMapping("/login.action")
     public String login(User user, Model model) throws Exception{
 
-        System.out.println(user.getUserName());
+        System.out.println(user.getUsername());
         System.out.println(user.getPassword());
 
         User user1 = userService.getUserById(1);
-        model.addAttribute("username",user1.getUserName());
+        model.addAttribute("username",user1.getUsername());
         return "home";
     }
 

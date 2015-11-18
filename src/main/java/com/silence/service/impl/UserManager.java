@@ -19,7 +19,7 @@ public class UserManager implements UserService {
     private UserMapper userMapper;
 
     public User getUserById(Integer id) throws Exception {
-        User user = userMapper.findUserById(id);
+        User user = userMapper.selectByPrimaryKey(id);
         if(user != null){
             return user;
         }
