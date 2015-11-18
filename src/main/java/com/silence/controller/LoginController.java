@@ -29,7 +29,7 @@ public class LoginController {
 
         User user1 = userService.getUserById(1);
         model.addAttribute("username",user1.getUserName());
-        return "success";
+        return "home";
     }
 
 }
