@@ -1,25 +1,40 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015/11/18 19:15:19                          */
+/* Created on:     2015/11/18 22:02:52                          */
 /*==============================================================*/
 
 
+drop table if exists be_using;
+
 drop table if exists buy_device;
 
-drop table if exists devices;
+drop table if exists device;
 
 drop table if exists fix_device;
 
-drop table if exists users;
+drop table if exists user;
 
-drop table if exists be_using;
+/*==============================================================*/
+/* Table: be_using                                              */
+/*==============================================================*/
+create table be_using
+(
+   id                   int not null auto_increment,
+   d_id                 int,
+   u_place              char(20),
+   u_state              int comment '0Ë°®Á§∫‰ΩøÁî®‰∏≠
+            1Ë°®Á§∫ÂÅúÁî®‰∏≠
+            2Ë°®Á§∫Áª¥‰øÆ‰∏≠',
+   u_mark               char(200),
+   primary key (id)
+);
 
 /*==============================================================*/
 /* Table: buy_device                                            */
 /*==============================================================*/
 create table buy_device
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    buyer                varchar(20),
    d_id                 int,
    b_money              float,
@@ -29,11 +44,11 @@ create table buy_device
 );
 
 /*==============================================================*/
-/* Table: devices                                               */
+/* Table: device                                                */
 /*==============================================================*/
-create table devices
+create table device
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    d_name               varchar(20),
    d_desc               varchar(200),
    d_price              float(5),
@@ -45,7 +60,7 @@ create table devices
 /*==============================================================*/
 create table fix_device
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    fixer                varchar(20),
    d_id                 int,
    fix_time             time,
@@ -54,38 +69,23 @@ create table fix_device
 );
 
 /*==============================================================*/
-/* Table: users                                                 */
+/* Table: user                                                  */
 /*==============================================================*/
-create table users
+create table user
 (
-   id                   int not null,
+   id                   int not null auto_increment,
    username             varchar(20),
    password             char(32),
-   salt                 varchar(20) comment '”√”⁄√‹¬Îº”√‹ π”√',
+   salt                 varchar(20) comment 'Áî®‰∫éÂØÜÁ†ÅÂä†ÂØÜ‰ΩøÁî®',
    primary key (id)
 );
-
-/*==============================================================*/
-/* Table: be_using                                                 */
-/*==============================================================*/
-create table be_using
-(
-   id                   int not null,
-   d_id                 int,
-   u_place              char(20),
-   u_state              int comment '0±Ì æ π”√÷–
-            1±Ì æÕ£”√÷–
-            2±Ì æŒ¨–ﬁ÷–',
-   u_mark               char(200),
-   primary key (id)
-);
-
-alter table buy_device add constraint FK_buy foreign key (d_id)
-      references devices (id) on delete restrict on update restrict;
-
-alter table fix_device add constraint FK_fix foreign key (d_id)
-      references devices (id) on delete restrict on update restrict;
 
 alter table be_using add constraint FK_use foreign key (d_id)
-      references devices (id) on delete restrict on update restrict;
+      references device (id) on delete restrict on update restrict;
+
+alter table buy_device add constraint FK_buy foreign key (d_id)
+      references device (id) on delete restrict on update restrict;
+
+alter table fix_device add constraint FK_fix foreign key (d_id)
+      references device (id) on delete restrict on update restrict;
 

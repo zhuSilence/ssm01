@@ -18,11 +18,19 @@ public class UserManager implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    //根据用户的id查询用户信息
     public User getUserById(Integer id) throws Exception {
         User user = userMapper.selectByPrimaryKey(id);
         if(user != null){
             return user;
         }
         return null;
+    }
+
+    //根据用户信息插入用户实体
+    public void insertUser(User user){
+        if(user != null){
+            userMapper.insert(user);
+        }
     }
 }
