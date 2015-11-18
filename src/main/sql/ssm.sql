@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015/11/18 22:02:52                          */
+/* Created on:     2015/11/18 22:14:31                          */
 /*==============================================================*/
 
 
@@ -37,8 +37,8 @@ create table buy_device
    id                   int not null auto_increment,
    buyer                varchar(20),
    d_id                 int,
-   b_money              float,
-   b_time               time,
+   b_money              double,
+   b_time               datetime,
    b_mark               varchar(200),
    primary key (id)
 );
@@ -51,7 +51,7 @@ create table device
    id                   int not null auto_increment,
    d_name               varchar(20),
    d_desc               varchar(200),
-   d_price              float(5),
+   d_price              double,
    primary key (id)
 );
 
@@ -63,7 +63,7 @@ create table fix_device
    id                   int not null auto_increment,
    fixer                varchar(20),
    d_id                 int,
-   fix_time             time,
+   fix_time             datetime,
    fix_mark             varchar(200),
    primary key (id)
 );
