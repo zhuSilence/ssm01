@@ -3,15 +3,15 @@ package com.silence.mapper;
 import com.silence.po.FixDevice;
 
 public interface FixDeviceMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id) throws Exception;
 
-    int insert(FixDevice record);
+    int insert(FixDevice record) throws Exception;
 
-    int insertSelective(FixDevice record);
+    int insertSelective(FixDevice record) throws Exception;
 
-    FixDevice selectByPrimaryKey(Integer id);
+    FixDevice selectByPrimaryKey(Integer id) throws Exception;
 
-    int updateByPrimaryKeySelective(FixDevice record);
+    int updateByPrimaryKeySelective(FixDevice record) throws Exception;
 
-    int updateByPrimaryKey(FixDevice record);
+    int updateByPrimaryKey(FixDevice record) throws Exception;
 }

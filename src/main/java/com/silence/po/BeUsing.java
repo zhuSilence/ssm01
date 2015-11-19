@@ -11,6 +11,8 @@ public class BeUsing {
 
     private String u_mark;
 
+    private Boolean is_using;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class BeUsing {
 
     public void setU_mark(String u_mark) {
         this.u_mark = u_mark == null ? null : u_mark.trim();
+    }
+
+    public Boolean getIs_using() {
+        return is_using;
+    }
+
+    public void setIs_using(Boolean is_using) {
+        this.is_using = is_using;
     }
 }

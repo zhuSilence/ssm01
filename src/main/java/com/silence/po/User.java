@@ -9,6 +9,8 @@ public class User {
 
     private String salt;
 
+    private Boolean locked;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt == null ? null : salt.trim();
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
     }
 }

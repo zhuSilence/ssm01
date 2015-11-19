@@ -5,11 +5,12 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="fixer" property="fixer" jdbcType="VARCHAR" />
     <result column="d_id" property="d_id" jdbcType="INTEGER" />
-    <result column="fix_time" property="fix_time" jdbcType="TIMESTAMP" />
+    <result column="fix_time" property="fix_time" jdbcType="TIME" />
     <result column="fix_mark" property="fix_mark" jdbcType="VARCHAR" />
+    <result column="is_fixed" property="is_fixed" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, fixer, d_id, fix_time, fix_mark
+    id, fixer, d_id, fix_time, fix_mark, is_fixed
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.silence.po.FixDevice" >
     insert into fix_device (id, fixer, d_id, 
-      fix_time, fix_mark)
+      fix_time, fix_mark, is_fixed
+      )
     values (#{id,jdbcType=INTEGER}, #{fixer,jdbcType=VARCHAR}, #{d_id,jdbcType=INTEGER}, 
-      #{fix_time,jdbcType=TIMESTAMP}, #{fix_mark,jdbcType=VARCHAR})
+      #{fix_time,jdbcType=TIME}, #{fix_mark,jdbcType=VARCHAR}, #{is_fixed,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.silence.po.FixDevice" >
     insert into fix_device
@@ -45,6 +48,9 @@
       <if test="fix_mark != null" >
         fix_mark,
       </if>
+      <if test="is_fixed != null" >
+        is_fixed,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -57,10 +63,13 @@
         #{d_id,jdbcType=INTEGER},
       </if>
       <if test="fix_time != null" >
-        #{fix_time,jdbcType=TIMESTAMP},
+        #{fix_time,jdbcType=TIME},
       </if>
       <if test="fix_mark != null" >
         #{fix_mark,jdbcType=VARCHAR},
+      </if>
+      <if test="is_fixed != null" >
+        #{is_fixed,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -74,10 +83,13 @@
         d_id = #{d_id,jdbcType=INTEGER},
       </if>
       <if test="fix_time != null" >
-        fix_time = #{fix_time,jdbcType=TIMESTAMP},
+        fix_time = #{fix_time,jdbcType=TIME},
       </if>
       <if test="fix_mark != null" >
         fix_mark = #{fix_mark,jdbcType=VARCHAR},
+      </if>
+      <if test="is_fixed != null" >
+        is_fixed = #{is_fixed,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -86,8 +98,9 @@
     update fix_device
     set fixer = #{fixer,jdbcType=VARCHAR},
       d_id = #{d_id,jdbcType=INTEGER},
-      fix_time = #{fix_time,jdbcType=TIMESTAMP},
-      fix_mark = #{fix_mark,jdbcType=VARCHAR}
+      fix_time = #{fix_time,jdbcType=TIME},
+      fix_mark = #{fix_mark,jdbcType=VARCHAR},
+      is_fixed = #{is_fixed,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

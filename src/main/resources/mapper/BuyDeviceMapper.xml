@@ -6,7 +6,7 @@
     <result column="buyer" property="buyer" jdbcType="VARCHAR" />
     <result column="d_id" property="d_id" jdbcType="INTEGER" />
     <result column="b_money" property="b_money" jdbcType="DOUBLE" />
-    <result column="b_time" property="b_time" jdbcType="TIMESTAMP" />
+    <result column="b_time" property="b_time" jdbcType="TIME" />
     <result column="b_mark" property="b_mark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -27,7 +27,7 @@
       b_money, b_time, b_mark
       )
     values (#{id,jdbcType=INTEGER}, #{buyer,jdbcType=VARCHAR}, #{d_id,jdbcType=INTEGER}, 
-      #{b_money,jdbcType=DOUBLE}, #{b_time,jdbcType=TIMESTAMP}, #{b_mark,jdbcType=VARCHAR}
+      #{b_money,jdbcType=DOUBLE}, #{b_time,jdbcType=TIME}, #{b_mark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.silence.po.BuyDevice" >
@@ -66,7 +66,7 @@
         #{b_money,jdbcType=DOUBLE},
       </if>
       <if test="b_time != null" >
-        #{b_time,jdbcType=TIMESTAMP},
+        #{b_time,jdbcType=TIME},
       </if>
       <if test="b_mark != null" >
         #{b_mark,jdbcType=VARCHAR},
@@ -86,7 +86,7 @@
         b_money = #{b_money,jdbcType=DOUBLE},
       </if>
       <if test="b_time != null" >
-        b_time = #{b_time,jdbcType=TIMESTAMP},
+        b_time = #{b_time,jdbcType=TIME},
       </if>
       <if test="b_mark != null" >
         b_mark = #{b_mark,jdbcType=VARCHAR},
@@ -99,7 +99,7 @@
     set buyer = #{buyer,jdbcType=VARCHAR},
       d_id = #{d_id,jdbcType=INTEGER},
       b_money = #{b_money,jdbcType=DOUBLE},
-      b_time = #{b_time,jdbcType=TIMESTAMP},
+      b_time = #{b_time,jdbcType=TIME},
       b_mark = #{b_mark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

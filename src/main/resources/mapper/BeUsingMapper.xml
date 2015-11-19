@@ -7,9 +7,10 @@
     <result column="u_place" property="u_place" jdbcType="CHAR" />
     <result column="u_state" property="u_state" jdbcType="INTEGER" />
     <result column="u_mark" property="u_mark" jdbcType="CHAR" />
+    <result column="is_using" property="is_using" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, d_id, u_place, u_state, u_mark
+    id, d_id, u_place, u_state, u_mark, is_using
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +24,9 @@
   </delete>
   <insert id="insert" parameterType="com.silence.po.BeUsing" >
     insert into be_using (id, d_id, u_place, 
-      u_state, u_mark)
+      u_state, u_mark, is_using)
     values (#{id,jdbcType=INTEGER}, #{d_id,jdbcType=INTEGER}, #{u_place,jdbcType=CHAR}, 
-      #{u_state,jdbcType=INTEGER}, #{u_mark,jdbcType=CHAR})
+      #{u_state,jdbcType=INTEGER}, #{u_mark,jdbcType=CHAR}, #{is_using,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.silence.po.BeUsing" >
     insert into be_using
@@ -45,6 +46,9 @@
       <if test="u_mark != null" >
         u_mark,
       </if>
+      <if test="is_using != null" >
+        is_using,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -61,6 +65,9 @@
       </if>
       <if test="u_mark != null" >
         #{u_mark,jdbcType=CHAR},
+      </if>
+      <if test="is_using != null" >
+        #{is_using,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -79,6 +86,9 @@
       <if test="u_mark != null" >
         u_mark = #{u_mark,jdbcType=CHAR},
       </if>
+      <if test="is_using != null" >
+        is_using = #{is_using,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,7 +97,8 @@
     set d_id = #{d_id,jdbcType=INTEGER},
       u_place = #{u_place,jdbcType=CHAR},
       u_state = #{u_state,jdbcType=INTEGER},
-      u_mark = #{u_mark,jdbcType=CHAR}
+      u_mark = #{u_mark,jdbcType=CHAR},
+      is_using = #{is_using,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -25,9 +25,6 @@ public class LoginController {
     @RequestMapping("/login.action")
     public String login(User user, Model model) throws Exception{
 
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-
         User user1 = userService.getUserById(1);
         if (user1 == null){
             throw new CustomException("不存在该用户的信息");
@@ -35,11 +32,6 @@ public class LoginController {
             user1.setSalt("haha");
             userService.updateUser(user1);
         }
-
-        /*Device device = new Device();
-        device.setD_desc("路由器");
-        device.setD_name("路由器");
-        device.setD_price(5.2f);*/
 
         model.addAttribute("username",user1.getUsername());
         return "home";

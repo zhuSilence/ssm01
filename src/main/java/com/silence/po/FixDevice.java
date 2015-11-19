@@ -13,6 +13,8 @@ public class FixDevice {
 
     private String fix_mark;
 
+    private Boolean is_fixed;
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class FixDevice {
 
     public void setFix_mark(String fix_mark) {
         this.fix_mark = fix_mark == null ? null : fix_mark.trim();
+    }
+
+    public Boolean getIs_fixed() {
+        return is_fixed;
+    }
+
+    public void setIs_fixed(Boolean is_fixed) {
+        this.is_fixed = is_fixed;
     }
 }
