@@ -41,4 +41,19 @@ public class UserManager implements UserService {
             userMapper.updateByPrimaryKey(user);
         }
     }
+
+    /**
+     * 根据用户名和密码查询用户信息
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    public User getUserByUsernameAndPassword(User user) throws Exception{
+        User user1 = userMapper.selectByUsernameAndPassword(user);
+        if (user1 != null) {
+            return user1;
+        }else {
+            return null;
+        }
+    }
 }

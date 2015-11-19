@@ -11,7 +11,11 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer id) throws Exception;
 
+    User selectByUsernameAndPassword(User user) throws Exception;
+
     int updateByPrimaryKeySelective(User record) throws Exception;
 
     int updateByPrimaryKey(User record) throws Exception;
+
+
 }
