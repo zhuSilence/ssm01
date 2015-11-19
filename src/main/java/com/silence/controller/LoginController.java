@@ -1,6 +1,6 @@
 package com.silence.controller;
 
-import com.silence.po.Device;
+import com.silence.exception.CustomException;
 import com.silence.po.User;
 import com.silence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +29,12 @@ public class LoginController {
         System.out.println(user.getPassword());
 
         User user1 = userService.getUserById(1);
-
-        User user2 = new User();
-        user2.setUsername("朱翔");
-        user2.setPassword("123321");
-        user2.setSalt("456654");
-        userService.insertUser(user2);
+        if (user1 == null){
+            throw new CustomException("不存在该用户的信息");
+        }else {
+            user1.setSalt("haha");
+            userService.updateUser(user1);
+        }
 
         /*Device device = new Device();
         device.setD_desc("路由器");

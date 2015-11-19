@@ -3,15 +3,15 @@ package com.silence.mapper;
 import com.silence.po.User;
 
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id) throws Exception;
 
-    int insert(User record);
+    int insert(User record) throws Exception;
 
-    int insertSelective(User record);
+    int insertSelective(User record) throws Exception;
 
-    User selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(Integer id) throws Exception;
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(User record) throws Exception;
 
-    int updateByPrimaryKey(User record);
+    int updateByPrimaryKey(User record) throws Exception;
 }

@@ -20,4 +20,11 @@ public interface UserService {
      * 根据用户信息插入用户实体
      */
     public void insertUser(User user) throws Exception;
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @throws Exception
+     */
+    public void updateUser(User user) throws Exception;
 }

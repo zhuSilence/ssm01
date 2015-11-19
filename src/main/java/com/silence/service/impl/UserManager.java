@@ -21,16 +21,24 @@ public class UserManager implements UserService {
     //根据用户的id查询用户信息
     public User getUserById(Integer id) throws Exception {
         User user = userMapper.selectByPrimaryKey(id);
-        if(user != null){
             return user;
-        }
-        return null;
     }
 
     //根据用户信息插入用户实体
-    public void insertUser(User user){
+    public void insertUser(User user) throws Exception{
         if(user != null){
             userMapper.insert(user);
+        }
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @throws Exception
+     */
+    public void updateUser(User user) throws Exception{
+        if (user != null) {
+            userMapper.updateByPrimaryKey(user);
         }
     }
 }
