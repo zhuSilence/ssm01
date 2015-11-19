@@ -11,7 +11,7 @@ public class BeUsing {
 
     private String u_mark;
 
-    private Boolean is_using;
+    private Boolean is_using = Boolean.FALSE;//false表示未使用，true表示使用
 
     public Integer getId() {
         return id;

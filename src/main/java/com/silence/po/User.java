@@ -9,7 +9,7 @@ public class User {
 
     private String salt;
 
-    private Boolean locked;
+    private Boolean locked = Boolean.FALSE;//false表示未锁定，true表示锁定
 
     public Integer getId() {
         return id;

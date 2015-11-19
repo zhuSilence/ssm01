@@ -13,7 +13,7 @@ public class FixDevice {
 
     private String fix_mark;
 
-    private Boolean is_fixed;
+    private Boolean is_fixed = Boolean.FALSE;//false表示未维修，true表示维修
 
     public Integer getId() {
         return id;
