@@ -1,91 +1,110 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015/11/18 22:14:31                          */
-/*==============================================================*/
+/*
+Navicat MySQL Data Transfer
 
+Source Server         : silence
+Source Server Version : 50624
+Source Host           : localhost:3306
+Source Database       : ssm
 
-drop table if exists be_using;
+Target Server Type    : MYSQL
+Target Server Version : 50624
+File Encoding         : 65001
 
-drop table if exists buy_device;
+Date: 2015-11-19 20:03:47
+*/
 
-drop table if exists device;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists fix_device;
+-- ----------------------------
+-- Table structure for `be_using`
+-- ----------------------------
+DROP TABLE IF EXISTS `be_using`;
+CREATE TABLE `be_using` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_id` int(11) DEFAULT NULL,
+  `u_place` char(20) DEFAULT NULL,
+  `u_state` int(11) DEFAULT NULL COMMENT '0��ʾʹ����\r\n            1��ʾͣ����\r\n            2��ʾά����',
+  `u_mark` char(200) DEFAULT NULL,
+  `is_using` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `FK_use` (`d_id`),
+  CONSTRAINT `FK_use` FOREIGN KEY (`d_id`) REFERENCES `device` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-drop table if exists user;
+-- ----------------------------
+-- Records of be_using
+-- ----------------------------
 
-/*==============================================================*/
-/* Table: be_using                                              */
-/*==============================================================*/
-create table be_using
-(
-   id                   int not null auto_increment,
-   d_id                 int,
-   u_place              char(20),
-   u_state              int comment '0表示使用中
-            1表示停用中
-            2表示维修中',
-   u_mark               char(200),
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for `buy_device`
+-- ----------------------------
+DROP TABLE IF EXISTS `buy_device`;
+CREATE TABLE `buy_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `buyer` varchar(20) DEFAULT NULL,
+  `d_id` int(11) DEFAULT NULL,
+  `b_money` double DEFAULT NULL,
+  `b_time` time DEFAULT NULL,
+  `b_mark` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_buy` (`d_id`),
+  CONSTRAINT `FK_buy` FOREIGN KEY (`d_id`) REFERENCES `device` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: buy_device                                            */
-/*==============================================================*/
-create table buy_device
-(
-   id                   int not null auto_increment,
-   buyer                varchar(20),
-   d_id                 int,
-   b_money              double,
-   b_time               datetime,
-   b_mark               varchar(200),
-   primary key (id)
-);
+-- ----------------------------
+-- Records of buy_device
+-- ----------------------------
 
-/*==============================================================*/
-/* Table: device                                                */
-/*==============================================================*/
-create table device
-(
-   id                   int not null auto_increment,
-   d_name               varchar(20),
-   d_desc               varchar(200),
-   d_price              double,
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for `device`
+-- ----------------------------
+DROP TABLE IF EXISTS `device`;
+CREATE TABLE `device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_name` varchar(20) DEFAULT NULL,
+  `d_desc` varchar(200) DEFAULT NULL,
+  `d_price` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: fix_device                                            */
-/*==============================================================*/
-create table fix_device
-(
-   id                   int not null auto_increment,
-   fixer                varchar(20),
-   d_id                 int,
-   fix_time             datetime,
-   fix_mark             varchar(200),
-   primary key (id)
-);
+-- ----------------------------
+-- Records of device
+-- ----------------------------
 
-/*==============================================================*/
-/* Table: user                                                  */
-/*==============================================================*/
-create table user
-(
-   id                   int not null auto_increment,
-   username             varchar(20),
-   password             char(32),
-   salt                 varchar(20) comment '用于密码加密使用',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for `fix_device`
+-- ----------------------------
+DROP TABLE IF EXISTS `fix_device`;
+CREATE TABLE `fix_device` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fixer` varchar(20) DEFAULT NULL,
+  `d_id` int(11) DEFAULT NULL,
+  `fix_time` time DEFAULT NULL,
+  `fix_mark` varchar(200) DEFAULT NULL,
+  `is_fixed` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `FK_fix` (`d_id`),
+  CONSTRAINT `FK_fix` FOREIGN KEY (`d_id`) REFERENCES `device` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-alter table be_using add constraint FK_use foreign key (d_id)
-      references device (id) on delete restrict on update restrict;
+-- ----------------------------
+-- Records of fix_device
+-- ----------------------------
 
-alter table buy_device add constraint FK_buy foreign key (d_id)
-      references device (id) on delete restrict on update restrict;
+-- ----------------------------
+-- Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) DEFAULT NULL,
+  `password` char(32) DEFAULT NULL,
+  `salt` varchar(20) DEFAULT NULL COMMENT '�����������ʹ��',
+  `locked` bit(1) DEFAULT b'0' COMMENT '0表示为锁定，1表示锁定',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-alter table fix_device add constraint FK_fix foreign key (d_id)
-      references device (id) on delete restrict on update restrict;
-
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', 'silence', '123456', 'haha', '');
