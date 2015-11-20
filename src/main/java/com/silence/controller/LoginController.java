@@ -32,7 +32,7 @@ public class LoginController {
             throw new CustomException("不存在该用户的信息");
         }else {
             if(user1.getLocked()){
-                throw new CustomException("该账户已被锁定，请联系管理员!");
+                  throw new CustomException("该账户已被锁定，请联系管理员!");
             }
         }
         model.addAttribute("username", user1.getUsername());
