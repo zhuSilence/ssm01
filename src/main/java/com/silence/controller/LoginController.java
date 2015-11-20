@@ -27,6 +27,7 @@ public class LoginController {
     @RequestMapping(value = "/login.action",method = RequestMethod.POST)
     public String login(User user, Model model) throws Exception{
 
+
         User user1 = userService.getUserByUsernameAndPassword(user);
         if (user1 == null){
             throw new CustomException("不存在该用户的信息");
