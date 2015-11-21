@@ -24,7 +24,7 @@ public class LoginController {
     /**
      * 用户登录方法
      */
-    @RequestMapping(value = "/login.action",method = RequestMethod.POST)
+    @RequestMapping(value = "/login.action")
     public String login(User user, Model model) throws Exception{
 
 
