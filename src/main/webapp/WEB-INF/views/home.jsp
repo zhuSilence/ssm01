@@ -21,7 +21,13 @@
     <link type="text/css" rel="stylesheet" href="${ctx}/css/home.css">
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>
+    <div id="north" data-options="region:'north'" style="height: 100px;">
+        <div id="info">
+            <a href="###" class="member">注销</a>
+            <a href="###" class="member">个人中心</a>
+            <a href="###">欢迎您，${user.username}</a>
+        </div>
+    </div>
     <div data-options="region:'west',title:'West',split:true" style="width:200px;"></div>
     <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>
     <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>

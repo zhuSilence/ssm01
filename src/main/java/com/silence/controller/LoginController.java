@@ -36,7 +36,7 @@ public class LoginController {
                   throw new CustomException("该账户已被锁定，请联系管理员!");
             }
         }
-        model.addAttribute("username", user1.getUsername());
+        model.addAttribute("user", user);
         return "home";
     }
 
