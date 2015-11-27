@@ -51,6 +51,7 @@ $(function(){
                     index : 0,
                     row : {
                         date : new Date(),
+                        salt : new Date().getMilliseconds() * parseInt(Math.random()*10),
                     },
                 });
 
@@ -141,6 +142,7 @@ $(function(){
         url : '/user/getUserList.action',
         iconCls : 'icon-search',
         striped : true,
+        fit : true,
         rownumbers : true,
         loadMsg : '努力加载中。。。',
         fitColumns : true,
@@ -172,8 +174,11 @@ $(function(){
                 sortable : true,
                 align : 'center',
                 width : 100,
+                formatter : function(value){
+                    return value;
+                },
                 editor : {
-                    type : 'text',
+                    type : 'validatebox',
                     options : {
                         required : true,
                     },
@@ -195,12 +200,12 @@ $(function(){
                 sortable : true,
                 align : 'center',
                 width : 100,
-                editor : {
-                    type : 'text',
+                /*editor : {
+                    type : 'validatebox',
                     options : {
                         required : true,
                     },
-                },
+                },*/
             },
             {
                 field : 'locked',
@@ -310,5 +315,7 @@ $(function(){
             }
         },
     });
+
+    $('#table').datagrid("resize");
 });
 

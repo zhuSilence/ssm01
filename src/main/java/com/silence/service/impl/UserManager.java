@@ -1,9 +1,11 @@
 package com.silence.service.impl;
 
+import com.silence.exception.CustomException;
 import com.silence.mapper.UserMapper;
 import com.silence.po.User;
 import com.silence.service.UserService;
 import com.silence.utils.DateTool;
+import com.silence.utils.MD5Util;
 import com.silence.utils.Pageable;
 import com.silence.vo.UserQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,15 +80,19 @@ public class UserManager implements UserService {
                 user.setUsername(map.get("row[username]").toString().trim());
             }
             if(map.containsKey("row[password]") && !map.get("row[password]").toString().trim().equals("")){
-                user.setPassword(map.get("row[password]").toString().trim());
+                if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")) {
+                    user.setSalt(map.get("row[salt]").toString().trim());
+                    user.setPassword(MD5Util.MD5(map.get("row[password]").toString().trim()
+                            + map.get("row[salt]").toString().trim()));
+                }else {
+                    user.setPassword(MD5Util.MD5(MD5Util.MD5(map.get("row[password]").toString().trim())));
+                }
             }
             if(map.containsKey("row[date]")){
                 Date date = DateTool.standardStringToDate(map.get("row[date]").toString(),"yyyy-MM-dd HH:mm:ss");
                 user.setDate(date);
             }
-            if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")){
-                user.setSalt(map.get("row[salt]").toString().trim());
-            }
+
             if(map.containsKey("row[locked]")){
                 user.setLocked(Boolean.TRUE);
             }else {
@@ -110,15 +116,18 @@ public class UserManager implements UserService {
                     user.setUsername(map.get("row[username]").toString());
                 }
                 if(map.containsKey("row[password]") && !map.get("row[password]").toString().trim().equals("")){
-                    user.setPassword(map.get("row[password]").toString().trim());
+                    if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")){
+                        if(!map.get("row[password]").toString().trim().equals(user.getPassword())){
+                            user.setPassword(MD5Util.MD5(map.get("row[password]").toString().trim()
+                                    + user.getSalt()));
+                        }
+                    }
                 }
                 if(map.containsKey("row[date]")){
                     Date date = DateTool.timestampToDate(map.get("row[date]").toString());
                     user.setDate(date);
                 }
-                if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")){
-                    user.setSalt(map.get("row[salt]").toString().trim());
-                }
+
                 if(map.containsKey("row[locked]")){
                     user.setLocked(Boolean.TRUE);
                 }else {
@@ -136,11 +145,15 @@ public class UserManager implements UserService {
      * @throws Exception
      */
     public User getUserByUsernameAndPassword(User user) throws Exception{
-        User user1 = userMapper.selectByUsernameAndPassword(user);
-        if (user1 != null) {
-            return user1;
+        User user1 = userMapper.findUserByUsername(user.getUsername().trim());
+        if(user1 != null){
+            if(user1.getPassword().equals(MD5Util.MD5(user.getPassword()+user1.getSalt()))){
+                return user1;
+            }else {
+                return null;
+            }
         }else {
-            return null;
+            throw new CustomException("不存在该用户的信息!");
         }
     }
 

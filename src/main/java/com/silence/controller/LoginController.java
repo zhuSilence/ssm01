@@ -40,9 +40,10 @@ public class LoginController {
     public String login(User user, Model model) throws Exception{
         User user1 = userService.getUserByUsernameAndPassword(user);
         if (user1 == null){
-            throw new CustomException("不存在该用户的信息");
+            throw new CustomException("用户名或密码错误！");
         }else {
             if(user1.getLocked()){
+                //String msg = "<a target=\"_blank\" href=\"http://wpa.qq.com/msgrd?v=3&uin=1347023180&site=qq&menu=yes\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=2:1347023180:41\" alt=\"联系管理员\" title=\"联系管理员\"/></a>";
                   throw new CustomException("该账户已被锁定，请联系管理员!");
             }
         }

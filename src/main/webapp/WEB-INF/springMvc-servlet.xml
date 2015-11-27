@@ -61,5 +61,5 @@
     <!--配置全局异常处理器
         只要实现了HandlerExceptionResolver接口，就是全局异常处理器
     -->
-    <!--<beans:bean class="com.silence.exception.CustomExceptionResolver"/>-->
+    <beans:bean class="com.silence.exception.CustomExceptionResolver"/>
 </beans:beans>
