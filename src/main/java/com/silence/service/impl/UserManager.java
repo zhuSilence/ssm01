@@ -3,9 +3,18 @@ package com.silence.service.impl;
 import com.silence.mapper.UserMapper;
 import com.silence.po.User;
 import com.silence.service.UserService;
+import com.silence.utils.DateTool;
+import com.silence.utils.Pageable;
+import com.silence.vo.UserQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by zhuxiang on 2015/11/13.
@@ -24,21 +33,99 @@ public class UserManager implements UserService {
             return user;
     }
 
-    //根据用户信息插入用户实体
-    public void insertUser(User user) throws Exception{
-        if(user != null){
-            userMapper.insert(user);
+    /**
+     * 查询出所有的用户信息
+     * @return
+     * @throws Exception
+     */
+    public List<User> getUserList(Map<String, Object> map, Pageable pageable) throws Exception{
+        UserQueryVo userQueryVo = new UserQueryVo();
+        userQueryVo.setMap(map);
+        userQueryVo.setPageable(pageable);
+        List<User> userList = userMapper.selectUserList(userQueryVo);
+        if (userList != null && userList.size() > 0){
+            return userList;
+        }else {
+            return null;
         }
     }
 
     /**
-     * 修改用户信息
-     * @param user
+     * 查询出所有的用户记录条数
+     * @return
      * @throws Exception
      */
-    public void updateUser(User user) throws Exception{
-        if (user != null) {
-            userMapper.updateByPrimaryKey(user);
+    public int getUserListSize(Map<String, Object> map, Pageable pageable) throws Exception{
+        UserQueryVo userQueryVo = new UserQueryVo();
+        userQueryVo.setPageable(pageable);
+        userQueryVo.setMap(map);
+        Integer userListSize = userMapper.selectAllUserListSize(userQueryVo);
+        if(userListSize != 0){
+            return userListSize;
+        }
+        return 0;
+    }
+
+    //根据用户信息插入用户实体
+    public String insertUser(Map<String,Object> map) throws Exception{
+        if(map != null){
+            User user = new User();
+            if(map.containsKey("row[username]") && !map.get("row[username]").toString().trim().equals("")){
+                User user1 = userMapper.findUserByUsername(map.get("row[username]").toString().trim());
+                if(user1 != null){
+                    return "该用户名称已存在，请重新添加";
+                }
+                user.setUsername(map.get("row[username]").toString().trim());
+            }
+            if(map.containsKey("row[password]") && !map.get("row[password]").toString().trim().equals("")){
+                user.setPassword(map.get("row[password]").toString().trim());
+            }
+            if(map.containsKey("row[date]")){
+                Date date = DateTool.standardStringToDate(map.get("row[date]").toString(),"yyyy-MM-dd HH:mm:ss");
+                user.setDate(date);
+            }
+            if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")){
+                user.setSalt(map.get("row[salt]").toString().trim());
+            }
+            if(map.containsKey("row[locked]")){
+                user.setLocked(Boolean.TRUE);
+            }else {
+                user.setLocked(Boolean.FALSE);
+            }
+            userMapper.insertSelective(user);
+        }
+        return "success";
+    }
+
+    /**
+     * 修改用户信息
+     * @param map
+     * @throws Exception
+     */
+    public void updateUser(Map<String,Object> map) throws Exception{
+        if(map != null && map.containsKey("row[id]")){
+            User user = userMapper.selectByPrimaryKey(Integer.parseInt(map.get("row[id]").toString()));
+            if(user != null){
+                if(map.containsKey("row[username]") && !map.get("row[username]").toString().trim().equals("")){
+                    user.setUsername(map.get("row[username]").toString());
+                }
+                if(map.containsKey("row[password]") && !map.get("row[password]").toString().trim().equals("")){
+                    user.setPassword(map.get("row[password]").toString().trim());
+                }
+                if(map.containsKey("row[date]")){
+                    Date date = DateTool.timestampToDate(map.get("row[date]").toString());
+                    user.setDate(date);
+                }
+                if(map.containsKey("row[salt]") && !map.get("row[salt]").toString().trim().equals("")){
+                    user.setSalt(map.get("row[salt]").toString().trim());
+                }
+                if(map.containsKey("row[locked]")){
+                    user.setLocked(Boolean.TRUE);
+                }else {
+                    user.setLocked(Boolean.FALSE);
+                }
+                userMapper.updateByPrimaryKeySelective(user);
+            }
         }
     }
 
@@ -55,5 +142,18 @@ public class UserManager implements UserService {
         }else {
             return null;
         }
+    }
+
+    /**
+     * 根据传入的用户的id，删除用户的信息
+     * @param id
+     * @throws Exception
+     */
+    public Integer deleteUserById(Integer id) throws Exception{
+        int rows = userMapper.deleteByPrimaryKey(id);
+        if (rows > 0) {
+            return rows;
+        }
+        return 0;
     }
 }

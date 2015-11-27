@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.silence.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.silence.po.User" >
+  <resultMap id="BaseResultMap" type="com.silence.custom.UserCustom" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="CHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="locked" property="locked" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, password, salt, locked
+    id, username, password, date,salt, locked
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,15 +28,59 @@
   </select>
 
 
+  <select id="selectUserList" resultMap="BaseResultMap" parameterType="com.silence.vo.UserQueryVo">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+        <if test="map.username != null and map.username != ''">
+          username LIKE '%${map.username}%'
+        </if>
+        <if test="map.date_from != null and map.date_from != ''">
+            AND date >= #{map.date_from}
+        </if>
+        <if test="map.date_to != null and map.date_to != ''">
+            AND #{map.date_to} >= date
+        </if>
+    </where>
+    ORDER BY ${pageable.sort} ${pageable.order}
+
+    limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
+  </select>
+
+<select id="selectAllUserListSize" resultType="java.lang.Integer" parameterType="com.silence.vo.UserQueryVo">
+    select
+    COUNT(*)
+    from user
+  <where>
+    <if test="map.username != null and map.username != ''">
+      username LIKE '%${map.username}%'
+    </if>
+    <if test="map.date_from != null and map.date_from != ''">
+      AND date >= #{map.date_from}
+    </if>
+    <if test="map.date_to != null and map.date_to != ''">
+      AND #{map.date_to} >= date
+    </if>
+  </where>
+</select>
+
+  <select id="findUserByUsername" resultType="com.silence.po.User" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from user where username = #{username}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.silence.po.User" >
-    insert into user (id, username, password, 
-      salt, locked)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=BIT})
+    insert into user ( username, password,
+      date, salt, locked)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
+      #{date,jdbcType=TIMESTAMP}, #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.silence.po.User" >
     insert into user
@@ -48,6 +93,9 @@
       </if>
       <if test="password != null" >
         password,
+      </if>
+      <if test="date != null" >
+        date,
       </if>
       <if test="salt != null" >
         salt,
@@ -66,6 +114,9 @@
       <if test="password != null" >
         #{password,jdbcType=CHAR},
       </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
       <if test="salt != null" >
         #{salt,jdbcType=VARCHAR},
       </if>
@@ -83,6 +134,9 @@
       <if test="password != null" >
         password = #{password,jdbcType=CHAR},
       </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
       <if test="salt != null" >
         salt = #{salt,jdbcType=VARCHAR},
       </if>
@@ -96,6 +150,7 @@
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=CHAR},
+      date = #{date,jdbcType=TIMESTAMP},
       salt = #{salt,jdbcType=VARCHAR},
       locked = #{locked,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}

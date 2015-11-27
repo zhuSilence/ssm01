@@ -1,5 +1,7 @@
 package com.silence.po;
 
+import java.util.Date;
+
 public class User {
     private Integer id;
 
@@ -7,9 +9,11 @@ public class User {
 
     private String password;
 
+    private Date date;
+
     private String salt;
 
-    private Boolean locked = Boolean.FALSE;//false表示未锁定，true表示锁定
+    private Boolean locked;
 
     public Integer getId() {
         return id;
@@ -33,6 +37,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getSalt() {

@@ -1,3 +1,7 @@
+html,body {
+    margin: 0;
+    padding: 0;
+}
 #north {
     margin: 0;
     padding: 0;
@@ -16,5 +20,23 @@
 }
 #north #info a.member:hover{
     color: #f60;
-    text-decoration: underline;
+}
+#west {}
+#center{}
+#south {
+    background: #5f5f5f;
+    text-align: center;
+}
+#south span {
+    color: mediumseagreen;
+    display: block;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+input.textbox {
+    height: 20px;
+    margin: 0;
+    padding: 0 2px;
+    box-sizing: content-box;
 }

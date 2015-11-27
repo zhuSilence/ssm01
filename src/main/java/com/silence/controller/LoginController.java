@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  *
  * Created by zhuxiang on 2015/11/13.
@@ -22,12 +25,19 @@ public class LoginController {
     private UserService userService;
 
     /**
+     * 初始index页面
+     * @return
+     */
+    @RequestMapping(value = "index.action")
+    public String index(){
+        return "index";
+    }
+
+    /**
      * 用户登录方法
      */
     @RequestMapping(value = "/login.action")
     public String login(User user, Model model) throws Exception{
-
-
         User user1 = userService.getUserByUsernameAndPassword(user);
         if (user1 == null){
             throw new CustomException("不存在该用户的信息");
@@ -38,6 +48,16 @@ public class LoginController {
         }
         model.addAttribute("user", user);
         return "home";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "loginOut.action")
+    public String loginOut(){
+
+        return "index";
     }
 
 
