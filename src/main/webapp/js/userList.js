@@ -232,7 +232,7 @@ $(function(){
         ]],
         toolbar : '#tb',
         pagination : true,
-        pageSize : 5,
+        pageSize : 10,
         pageList : [5,10,15],
         sortName : 'id',
         sortOrder : 'DESC',

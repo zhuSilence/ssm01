@@ -9,12 +9,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<html>
--<head>
-    <link type="text/css" rel="stylesheet" href="${ctx}/css/userList.css">
-</head>
-<body>
-
 
 <table id="table"></table>
 <div id="tb" style="padding: 5px;">
@@ -35,7 +29,6 @@
 
 <input type="hidden" value="${ctx}" id="ctx">
 <script type="text/javascript" src="${ctx}/js/userList.js"></script>
-</body>
-</html>
+
 
 
