@@ -52,13 +52,18 @@ public class LoginController {
     }
 
     /**
-     *
+     *注销方法
      * @return
      */
     @RequestMapping(value = "loginOut.action")
     public String loginOut(){
 
         return "index";
+    }
+
+    @RequestMapping(value = "/home.action")
+    public String home(){
+        return "home";
     }
 
 

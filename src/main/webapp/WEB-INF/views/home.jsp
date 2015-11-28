@@ -12,11 +12,6 @@
 <html>
 <head>
     <title>首页</title>
-    <script type="text/javascript" src="${ctx}/js/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="${ctx}/js/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="${ctx}/js/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="${ctx}/js/toDateString.js"></script>
-    <script type="text/javascript" src="${ctx}/js/home.js"></script>
     <link type="text/css" rel="stylesheet" href="${ctx}/js/easyui/themes/default/easyui.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/js/easyui/themes/icon.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/css/home.css">
@@ -30,24 +25,13 @@
             <a href="###">欢迎您，${user.username}</a>
         </div>
     </div>
-    <div id="west" data-options="region:'west',title:'West',split:true" style="width:200px;">
-
+    <div id="west" data-options="region:'west',title:'导航',split:true,iconCls : 'icon-world'" style="width:180px;padding: 10px;">
+        <ul id="nav"></ul>
     </div>
-    <div id="center" data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
-        <table id="table"></table>
-        <div id="tb" style="padding: 5px;">
-            <div style="margin-bottom: 5px;">
-                <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">增加</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="obj.edit();">修改</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="obj.remove();">删除</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" style="display: none;" id="save" onclick="obj.save();">保存</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain="true" style="display: none;" id="redo" onclick="obj.redo();">取消编辑</a>
-            </div>
-            <div style="padding: 0 0 0 7px; color: #333;">
-                查询账号：<input type="text" name="username" id="username" class="textbox" style="width:110px;">
-                创建时间从：<input type="text" name="date_from" id="date_from" class="easyui-datebox" editable="false" style="width:110px;"> 到 <input type="text" name="date_to" editable="false" id="date_to" class="easyui-datebox" style="width:110px;">
-                <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="obj.search();">查询</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-no" plain="true" id="clean">清空</a>
+    <div id="center" data-options="region:'center'" style="padding:5px;background:#eee;">
+        <div id="tabs">
+            <div title="起始页" iconCls = "icon-house" style="padding: 0 10px; display: block;">
+                欢迎来到设备管理系统
             </div>
         </div>
     </div>
@@ -59,8 +43,12 @@
 <body>
 
 
-
-
+<input type="hidden" value="${ctx}" id="ctx">
+<script type="text/javascript" src="${ctx}/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${ctx}/js/toDateString.js"></script>
+<script type="text/javascript" src="${ctx}/js/home.js"></script>
 </body>
 </html>
 
