@@ -59,7 +59,7 @@ $(function () {
                 },
                 success : function(data,response,status){
                     $.messager.progress('close');
-                    if(data){
+                    if(data == 'home'){
                         location.href =  ctx + '/login/home.action';
                     }else{
                         $.messager.alert('登录失败','用户名或密码错误','warning',function(){

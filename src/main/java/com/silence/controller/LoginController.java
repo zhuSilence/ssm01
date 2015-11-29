@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +38,7 @@ public class LoginController {
      * 用户登录方法
      */
     @RequestMapping(value = "/login.action")
-    public String login(User user, Model model) throws Exception{
+    @ResponseBody public String login(User user, Model model) throws Exception{
         User user1 = userService.getUserByUsernameAndPassword(user);
         if (user1 == null){
             throw new CustomException("用户名或密码错误！");

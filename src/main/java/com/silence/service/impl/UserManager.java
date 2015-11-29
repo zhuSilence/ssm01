@@ -147,7 +147,8 @@ public class UserManager implements UserService {
     public User getUserByUsernameAndPassword(User user) throws Exception{
         User user1 = userMapper.findUserByUsername(user.getUsername().trim());
         if(user1 != null){
-            if(user1.getPassword().equals(MD5Util.MD5(user.getPassword()+user1.getSalt()))){
+            String value = MD5Util.MD5(user.getPassword()+user1.getSalt());
+            if(user1.getPassword().equals(value)){
                 return user1;
             }else {
                 return null;
