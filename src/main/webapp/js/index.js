@@ -59,8 +59,8 @@ $(function () {
                 },
                 success : function(data,response,status){
                     $.messager.progress('close');
-                    if(data == 'home'){
-                        location.href =  ctx + '/login/home.action';
+                    if(data != null){
+                        location.href =  ctx + '/login/home.action?username='+ data.username;
                     }else{
                         $.messager.alert('登录失败','用户名或密码错误','warning',function(){
                             $('#password').select();

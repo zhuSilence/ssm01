@@ -22,7 +22,7 @@
         <div id="info">
             <a href="${ctx}/login/loginOut.action" class="member">注销</a>
             <a href="###" class="member">个人中心</a>
-            <a href="###">欢迎您，${user.username}</a>
+            <a href="###">欢迎您，${username}</a>
         </div>
     </div>
     <div id="west" data-options="region:'west',title:'导航',split:true,iconCls : 'icon-world'" style="width:180px;padding: 10px;">

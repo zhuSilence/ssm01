@@ -111,7 +111,7 @@ $(function(){
                             success : function (data) {
                                 if(data){
                                     $('#table').datagrid('loaded');
-                                    $('#table').datagrid('load');
+                                    $('#table').datagrid('reload');
                                     $('#table').datagrid('unselectAll');
                                     $.messager.show({
                                         title : '提示',
@@ -300,7 +300,7 @@ $(function(){
                     success : function (data) {
                         if(data == 'success'){
                             $('#table').datagrid('loaded');
-                            $('#table').datagrid('load');
+                            $('#table').datagrid('reload');
                             $('#table').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',

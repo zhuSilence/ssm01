@@ -38,7 +38,7 @@ public class LoginController {
      * 用户登录方法
      */
     @RequestMapping(value = "/login.action")
-    @ResponseBody public String login(User user, Model model) throws Exception{
+    @ResponseBody public User login(User user, Model model) throws Exception{
         User user1 = userService.getUserByUsernameAndPassword(user);
         if (user1 == null){
             throw new CustomException("用户名或密码错误！");
@@ -48,8 +48,8 @@ public class LoginController {
                   throw new CustomException("该账户已被锁定，请联系管理员!");
             }
         }
-        model.addAttribute("user", user);
-        return "home";
+       // model.addAttribute("user", user);
+        return user;
     }
 
     /**
@@ -63,7 +63,10 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/home.action")
-    public String home(){
+    public String home(String username, Model model){
+        if(username != null){
+            model.addAttribute("username", username);
+        }
         return "home";
     }
 
