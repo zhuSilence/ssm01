@@ -1,5 +1,6 @@
 package com.silence.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.silence.po.User;
 import com.silence.service.UserService;
 import com.silence.utils.Page;
@@ -34,11 +35,14 @@ public class UserController {
             Page<User> page = new Page<User>();
             page.setTotal(userService.getUserListSize(map,pageable));
             page.setRows(userList);
-            return page;
+            //将生成的json字符串中的boolean的true和false替换为字符串的“true”和“false”
+            //否则前台的checkbox不能自动的选中
+            return JSON.toJSONString(page).replace("true","\"true\"").replace("false","\"false\"");
         }else {
             return null;
         }
     }
+
 
     /**
      * 根据前台传入的ids，对指定的用户进行删除

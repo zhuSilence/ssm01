@@ -7,12 +7,7 @@
     <link type="text/css" rel="stylesheet" href="${ctx}/js/easyui/themes/icon.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/css/index.css">
 </head>
-<body>
-<%--<form action="${ctx}/login/login.action" method="post">
-    用户名：<input type="text" name="username"/>
-    密　码：<input type="password" name="password"/>
-    <input type="submit" value="登录"/>
-</form>--%>
+<body style="width:100%;height: 100%;">
 
 <div id="login">
     <p>账号：<input type="text" id="manager" class="textbox"></p>

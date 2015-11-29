@@ -93,7 +93,7 @@ public class UserManager implements UserService {
                 user.setDate(date);
             }
 
-            if(map.containsKey("row[locked]")){
+            if(Boolean.valueOf(map.get("row[locked]").toString())){
                 user.setLocked(Boolean.TRUE);
             }else {
                 user.setLocked(Boolean.FALSE);
@@ -128,7 +128,7 @@ public class UserManager implements UserService {
                     user.setDate(date);
                 }
 
-                if(map.containsKey("row[locked]")){
+                if(Boolean.valueOf(map.get("row[locked]").toString())){
                     user.setLocked(Boolean.TRUE);
                 }else {
                     user.setLocked(Boolean.FALSE);

@@ -215,7 +215,7 @@ $(function(){
                 align : 'center',
                 width : 100,
                 formatter : function (value) {
-                    if(value){
+                    if(value == 'true'){
                         value = '<input type="checkbox" checked> ';
                     }else{
                         value = '<input type="checkbox">';
@@ -225,7 +225,8 @@ $(function(){
                 editor : {
                     type : 'checkbox',
                     options : {
-                        required : true,
+                        on: "true",
+                        off: "false"
                     },
                 },
             }
@@ -249,7 +250,6 @@ $(function(){
         },
         onAfterEdit : function (index, rowData, change) {
             $('#save,#redo').hide();
-
             var inserted = $('#table').datagrid('getChanges','inserted');
             var updated = $('#table').datagrid('getChanges','updated');
 
@@ -316,6 +316,7 @@ $(function(){
                 obj.editRow = undefined;
             }
         },
+
     });
 
     $('#table').datagrid("resize");

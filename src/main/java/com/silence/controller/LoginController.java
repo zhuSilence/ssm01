@@ -6,9 +6,7 @@ import com.silence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/login")
+@SessionAttributes("user")
 public class LoginController {
 
     @Autowired
@@ -46,9 +45,10 @@ public class LoginController {
             if(user1.getLocked()){
                 //String msg = "<a target=\"_blank\" href=\"http://wpa.qq.com/msgrd?v=3&uin=1347023180&site=qq&menu=yes\"><img border=\"0\" src=\"http://wpa.qq.com/pa?p=2:1347023180:41\" alt=\"联系管理员\" title=\"联系管理员\"/></a>";
                   throw new CustomException("该账户已被锁定，请联系管理员!");
+            }else {
+                model.addAttribute("user", user);
             }
         }
-       // model.addAttribute("user", user);
         return user;
     }
 
@@ -63,9 +63,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/home.action")
-    public String home(String username, Model model){
-        if(username != null){
-            model.addAttribute("username", username);
+    public String home(@ModelAttribute("user")User user, Model model){
+        if(user != null){
+            model.addAttribute("user", user);
         }
         return "home";
     }
