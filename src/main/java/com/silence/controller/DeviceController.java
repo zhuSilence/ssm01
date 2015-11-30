@@ -25,6 +25,13 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
+    /**
+     * 根据参数进行筛选查询
+     * @param request
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/getDeviceList.action")
     @ResponseBody
     public Object getDeviceList(HttpServletRequest request,Pageable pageable) throws Exception{
@@ -43,7 +50,7 @@ public class DeviceController {
     }
 
     /**
-     * 根据前台传入的id，对指定的用户进行修改
+     * 更新某一设备信息
      * @return
      */
     @RequestMapping(value = "/updateDevice.action", method = RequestMethod.POST)
@@ -52,4 +59,41 @@ public class DeviceController {
         deviceService.updateDevice(map);
         return "success";
     }
+
+
+    /**
+     * 新增某一设备记录
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/insertDevice.action", method = RequestMethod.POST)
+    @ResponseBody public String insertDevice(HttpServletRequest request) throws Exception{
+        Map<String,Object> map = WebUtil.getQueryParameter(request);
+        if(map != null){
+            return deviceService.insertDevice(map);
+        }else {
+            return "error";
+        }
+    }
+
+    /**
+     * 删除某一设备的信息
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/deleteDevice.action", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteDeviceById(HttpServletRequest request)throws Exception{
+        String ids = request.getParameter("ids");
+        String[] stringIds = ids.split(",");
+        Integer[] integerIds = new Integer[stringIds.length];
+        for (int i = 0; i < stringIds.length; i++){
+            integerIds[i] = Integer.parseInt(stringIds[i]);
+            deviceService.deleteDeviceById(integerIds[i]);
+        }
+        return "success";
+    }
+
 }

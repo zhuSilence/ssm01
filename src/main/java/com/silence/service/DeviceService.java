@@ -36,4 +36,21 @@ public interface DeviceService {
      * @throws Exception
      */
     public void updateDevice(Map<String,Object> map) throws Exception;
+
+    /**
+     * 新增Device表
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    public String insertDevice(Map<String,Object> map) throws Exception;
+
+
+    /**
+     * 删除某一设备信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Integer deleteDeviceById(Integer id) throws Exception;
 }
