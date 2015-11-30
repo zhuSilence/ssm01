@@ -28,4 +28,12 @@ public interface DeviceService {
      * @throws Exception
      */
     public int getDeviceListSize(Map<String, Object> map, Pageable pageable) throws Exception;
+
+
+    /**
+     * 更新Device表
+     * @param map
+     * @throws Exception
+     */
+    public void updateDevice(Map<String,Object> map) throws Exception;
 }

@@ -11,7 +11,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 
-<div id="tb" style="padding: 5px;">
+<div id="tb-divice" style="padding: 5px;">
   <div style="margin-bottom: 5px;">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add"    plain="true" onclick="obj.add();">增加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit"   plain="true" onclick="obj.edit();">修改</a>
@@ -23,11 +23,11 @@
     设备名称：<input type="text" name="d_name" id="d_name" class="textbox" style="width:110px;">
     价格范围：<input type="text" name="low_price" id="low_price" > 到 <input type="text" name="high_price" id="high_price">
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="obj.search();">查询</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-no" plain="true" id="clean">清空</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-no" plain="true" id="clean-divice">清空</a>
   </div>
 </div>
 
-<table id="table"></table>
+<table id="table-device"></table>
 
 <input type="hidden" value="${ctx}" id="ctx">
 <script type="text/javascript" src="${ctx}/js/deviceList.js"></script>

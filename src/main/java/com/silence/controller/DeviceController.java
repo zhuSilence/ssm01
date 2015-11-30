@@ -8,6 +8,7 @@ import com.silence.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,5 +40,16 @@ public class DeviceController {
         }else {
             return null;
         }
+    }
+
+    /**
+     * 根据前台传入的id，对指定的用户进行修改
+     * @return
+     */
+    @RequestMapping(value = "/updateDevice.action", method = RequestMethod.POST)
+    @ResponseBody public String updateUser(HttpServletRequest request) throws Exception{
+        Map<String,Object> map = WebUtil.getQueryParameter(request);
+        deviceService.updateDevice(map);
+        return "success";
     }
 }

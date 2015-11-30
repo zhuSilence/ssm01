@@ -43,6 +43,13 @@ public class DeviceManager implements DeviceService{
     }
 
 
+    /**
+     *
+     * @param map
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
     public int getDeviceListSize(Map<String, Object> map, Pageable pageable) throws Exception{
         UserQueryVo userQueryVo = new UserQueryVo();
         userQueryVo.setMap(map);
@@ -55,7 +62,17 @@ public class DeviceManager implements DeviceService{
     }
 
 
+    /**
+     *
+     * @param map
+     * @throws Exception
+     */
+    public void updateDevice(Map<String,Object> map) throws Exception{
+        if(map != null && map.containsKey("row[id]")){
+            System.out.print("sssssss");
+        }
 
+    }
 
 
 
