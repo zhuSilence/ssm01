@@ -23,10 +23,19 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/getUserList.action")
+
+    /**
+     * 接收页面查询参数和分页条件进行相应的数据查询
+     * @param request
+     * @param pageable
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getUserList.action", method = RequestMethod.POST)
     @ResponseBody public Object getUserList(HttpServletRequest request,Pageable pageable) throws Exception{
         Map<String,Object> map = WebUtil.getQueryParameter(request);
         pageable.setPage((pageable.getPage()-1)*pageable.getRows());

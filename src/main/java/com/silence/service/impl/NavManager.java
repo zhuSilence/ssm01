@@ -29,4 +29,18 @@ public class NavManager implements NavService {
         List<Nav> navList = navMapperExtend.findAllNavsByNid(nid);
         return navList;
     }
+
+    /**
+     * 返回所有的系统导航菜单
+     * @return
+     * @throws Exception
+     */
+    public List<Nav> findNavList() throws Exception {
+        List<Nav> navList = navMapperExtend.findNavList();
+        if(navList != null){
+            return navList;
+        }else {
+            return null;
+        }
+    }
 }

@@ -26,6 +26,12 @@
     where nid = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="findNavList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from nav
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from nav
     where id = #{id,jdbcType=INTEGER}

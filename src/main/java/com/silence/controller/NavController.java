@@ -40,11 +40,36 @@ public class NavController {
 
 
     /**
+     * 查询到所有的字节点的系统菜单
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getNavList.action")
+    @ResponseBody public List<Nav> getNavList() throws Exception {
+        List<Nav> navList = navService.findNavList();
+        if(navList != null){
+            return navList;
+        }else {
+            return null;
+        }
+    }
+
+
+    /**
      * 跳转到用户列表的页面
      * @return
      */
     @RequestMapping(value = "/userList.action")
     public String userList(){
         return "userList";
+    }
+
+
+    /**
+     * 查询所有的系统菜单
+     * @return
+     */
+    @RequestMapping(value = "/navList.action")
+    public String navList(){
+        return "navList";
     }
 }

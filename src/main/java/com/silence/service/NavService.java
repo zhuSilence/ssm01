@@ -18,4 +18,12 @@ public interface NavService {
      * @throws Exception
      */
     public List<Nav> findNavsByNid(Integer nid) throws Exception;
+
+
+    /**
+     * 返回所有的系统导航菜单
+     * @return
+     * @throws Exception
+     */
+    public List<Nav> findNavList() throws Exception;
 }
