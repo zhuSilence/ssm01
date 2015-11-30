@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : silence
+Source Server         : MySQL 5.6
 Source Server Version : 50624
 Source Host           : localhost:3306
 Source Database       : ssm
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-11-28 17:11:01
+Date: 2015-11-30 12:33:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,11 +65,14 @@ CREATE TABLE `device` (
   `d_desc` varchar(200) DEFAULT NULL,
   `d_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device
 -- ----------------------------
+INSERT INTO `device` VALUES ('1', '电脑', '华硕', '4300');
+INSERT INTO `device` VALUES ('2', '键盘', '微软', '120');
+INSERT INTO `device` VALUES ('3', '鼠标', '雷蛇', '140');
 
 -- ----------------------------
 -- Table structure for `fix_device`
@@ -103,7 +106,7 @@ CREATE TABLE `nav` (
   `url` varchar(50) DEFAULT NULL,
   `nid` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of nav
@@ -111,10 +114,11 @@ CREATE TABLE `nav` (
 INSERT INTO `nav` VALUES ('1', '系统管理', 'closed', 'icon-system', null, '0');
 INSERT INTO `nav` VALUES ('2', '用户管理', 'closed', 'icon-manager', null, '0');
 INSERT INTO `nav` VALUES ('3', '设备管理', 'closed', 'icon-user', null, '0');
-INSERT INTO `nav` VALUES ('4', '使用', 'open', 'icon-tip', null, '3');
-INSERT INTO `nav` VALUES ('5', '购买', 'open', 'icon-add-new', null, '3');
-INSERT INTO `nav` VALUES ('6', '维修', 'open', 'icon-no', null, '3');
+INSERT INTO `nav` VALUES ('4', '使用列表', 'open', 'icon-tip', null, '3');
+INSERT INTO `nav` VALUES ('5', '购买列表', 'open', 'icon-add-new', null, '3');
+INSERT INTO `nav` VALUES ('6', '维修列表', 'open', 'icon-no', null, '3');
 INSERT INTO `nav` VALUES ('7', '用户列表', 'open', 'icon-group', '/nav/userList.action', '2');
+INSERT INTO `nav` VALUES ('8', '设备列表', 'open', 'icon-tip', '/nav/deviceList.action', '3');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -128,7 +132,7 @@ CREATE TABLE `user` (
   `salt` varchar(20) DEFAULT NULL COMMENT '�����������ʹ��',
   `locked` bit(1) DEFAULT b'0' COMMENT '0表示为锁定，1表示锁定',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5473 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5474 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -159,7 +163,7 @@ INSERT INTO `user` VALUES ('5452', '你妹', 'nimzi', '2015-11-26 16:41:15', 'mi
 INSERT INTO `user` VALUES ('5453', '去死吧', 'qusi', '2015-11-26 16:46:09', 'wudf', '');
 INSERT INTO `user` VALUES ('5455', '趋势', 'quui', '2015-11-26 16:54:32', 'quui', '');
 INSERT INTO `user` VALUES ('5456', 'ad发', '森啊', '2015-11-26 16:59:14', 'affectl', '');
-INSERT INTO `user` VALUES ('5457', '团费', 'fhhg', '2015-11-26 17:00:26', 'gdfglr', '');
+INSERT INTO `user` VALUES ('5457', '团费', 'fhhg', '2015-11-26 17:00:26', 'gdfglr', '');
 INSERT INTO `user` VALUES ('5458', '32', '32', '2015-11-27 10:55:33', '3289', '');
 INSERT INTO `user` VALUES ('5463', '朱翔', 'EA48576F30BE1669971699C09AD05C94', '2015-11-27 12:37:20', '123456', '');
 INSERT INTO `user` VALUES ('5464', '小明', 'abc', '2015-11-27 13:46:45', 'abcd', '');
@@ -168,3 +172,4 @@ INSERT INTO `user` VALUES ('5466', '小小兵', '05C5E294697484E49ED9EDA5F756E79
 INSERT INTO `user` VALUES ('5468', '刘亦菲', '78786576', '2015-11-27 14:27:01', '84547676', '');
 INSERT INTO `user` VALUES ('5470', '大雄', '2982B73118CF042CC93271C67F99C4EF', '2015-11-27 14:39:17', '342', '');
 INSERT INTO `user` VALUES ('5471', '静香', '34C0200ECD6BFC8505B54CEEADF448B8', '2015-11-27 15:01:16', '654321', '');
+INSERT INTO `user` VALUES ('5473', 'dava', 'FB24FF05E9D750CFDDCAC030399D4E34', '2015-11-29 14:18:47', '1015', '');
