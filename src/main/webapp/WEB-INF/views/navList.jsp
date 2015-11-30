@@ -10,14 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-<table id="table"></table>
-<div id="tb" style="padding: 5px;">
+<table id="table-nav"></table>
+<div id="tb-nav" style="padding: 5px;">
     <div style="margin-bottom: 5px;">
         <a href="#" class="easyui-linkbutton" iconCls="icon-add"    plain="true" onclick="obj.add();">增加</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-edit"   plain="true" onclick="obj.edit();">修改</a>
         <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="obj.remove();">删除</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-save"   plain="true" style="display: none;" id="save" onclick="obj.save();">保存</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-redo"   plain="true" style="display: none;" id="redo" onclick="obj.redo();">取消编辑</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save"   plain="true" style="display: none;" id="save-nav" onclick="obj.save();">保存</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-redo"   plain="true" style="display: none;" id="redo-nav" onclick="obj.redo();">取消编辑</a>
     </div>
     <div style="padding: 0 0 0 7px; color: #333;">
         查询账号：<input type="text" name="username" id="username" class="textbox" style="width:110px;">

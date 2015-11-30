@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-11-30 12:45:06
+Date: 2015-11-30 12:50:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,11 +65,14 @@ CREATE TABLE `device` (
   `d_desc` varchar(200) DEFAULT NULL,
   `d_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device
 -- ----------------------------
+INSERT INTO `device` VALUES ('1', '电脑', '华硕', '4300');
+INSERT INTO `device` VALUES ('2', '键盘', '微软', '120');
+INSERT INTO `device` VALUES ('3', '鼠标', '雷蛇', '140');
 
 -- ----------------------------
 -- Table structure for `fix_device`

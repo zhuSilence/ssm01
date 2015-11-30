@@ -34,7 +34,7 @@ $(function(){
          * @type {{search: Function}}
          */
         search : function(){
-            $('#table').datagrid('load',{
+            $('#table-nav').datagrid('load',{
                 'queryParameter.username' : $.trim($('#username').val()),
                 'queryParameter.date_from' : $('#date_from').datebox('getValue'),
                 'queryParameter.date_to' :  $('#date_to').datebox('getValue'),
@@ -46,10 +46,10 @@ $(function(){
          */
 
         add : function(){
-            $('#save,#redo').show();
+            $('#save-nav,#redo-nav').show();
             //新增一行
             if(this.editRow == undefined){
-                $('#table').datagrid('insertRow',{
+                $('#table-nav').datagrid('insertRow',{
                     index : 0,
                     row : {
                         date : new Date(),
@@ -58,39 +58,39 @@ $(function(){
                 });
 
                 //将新增的行变成可编辑状态
-                $('#table').datagrid('beginEdit',0);
+                $('#table-nav').datagrid('beginEdit',0);
                 this.editRow = 0;
             }
 
         },
         save : function(){
             //将新增的行变成结束编辑状态
-            $('#table').datagrid('endEdit',this.editRow);
+            $('#table-nav').datagrid('endEdit',this.editRow);
         },
         redo : function () {
-            $('#save,#redo').hide();
+            $('#save-nav,#redo-nav').hide();
             this.editRow = undefined;
-            $('#table').datagrid('rejectChanges');
+            $('#table-nav').datagrid('rejectChanges');
         },
         edit : function () {
-            var rows = $('#table').datagrid('getSelections');
+            var rows = $('#table-nav').datagrid('getSelections');
             if(rows.length == 1){
                 if(this.editRow != undefined){
-                    $('#table').datagrid('endEdit',this.editRow);
+                    $('#table-nav').datagrid('endEdit',this.editRow);
                 }
                 if(this.editRow == undefined){
-                    var index = $('#table').datagrid('getRowIndex',rows[0]);
-                    $('#save,#redo').show();
-                    $('#table').datagrid('beginEdit',index);
+                    var index = $('#table-nav').datagrid('getRowIndex',rows[0]);
+                    $('#save-nav,#redo-nav').show();
+                    $('#table-nav').datagrid('beginEdit',index);
                     this.editRow = index;
-                    $('#table').datagrid('unselectRow',index);
+                    $('#table-nav').datagrid('unselectRow',index);
                 }
             }else{
                 $.messager.alert('警告','只允许同时修改一行!','warning');
             }
         },
         remove : function(){
-            var rows = $('#table').datagrid('getSelections');
+            var rows = $('#table-nav').datagrid('getSelections');
             if(rows.length > 0){
                 $.messager.confirm('确定操作','确定要删除所选吗？',function(flag){
                     if(flag){
@@ -106,13 +106,13 @@ $(function(){
                                 ids : ids.join(','),
                             },
                             beforeSend : function () {
-                                $('#table').datagrid('loading');
+                                $('#table-nav').datagrid('loading');
                             },
                             success : function (data) {
                                 if(data){
-                                    $('#table').datagrid('loaded');
-                                    $('#table').datagrid('reload');
-                                    $('#table').datagrid('unselectAll');
+                                    $('#table-nav').datagrid('loaded');
+                                    $('#table-nav').datagrid('reload');
+                                    $('#table-nav').datagrid('unselectAll');
                                     $.messager.show({
                                         title : '提示',
                                         msg : '删除成功!',
@@ -138,7 +138,7 @@ $(function(){
     });
 
 
-    $('#table').datagrid({
+    $('#table-nav').datagrid({
         width : 650,
         title : '用户列表',
         url : '/nav/getNavList.action',
@@ -223,7 +223,7 @@ $(function(){
                 },
             }
         ]],
-        toolbar : '#tb',
+        toolbar : '#tb-nav',
         pagination : true,
         pageSize : 10,
         pageList : [5,10,15],
@@ -232,18 +232,18 @@ $(function(){
         remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
             if(obj.editRow != undefined){
-                $('#table').datagrid('endEdit',obj.editRow);
+                $('#table-nav').datagrid('endEdit',obj.editRow);
             }
             if(obj.editRow == undefined){
-                $('#save,#redo').show();
+                $('#save-nav,#redo-nav').show();
                 obj.editRow = rowIndex;
-                $('#table').datagrid('beginEdit',rowIndex);
+                $('#table-nav').datagrid('beginEdit',rowIndex);
             }
         },
         onAfterEdit : function (index, rowData, change) {
-            $('#save,#redo').hide();
-            var inserted = $('#table').datagrid('getChanges','inserted');
-            var updated = $('#table').datagrid('getChanges','updated');
+            $('#save-nav,#redo-nav').hide();
+            var inserted = $('#table-nav').datagrid('getChanges','inserted');
+            var updated = $('#table-nav').datagrid('getChanges','updated');
 
             //新增用户
             if(inserted.length > 0){
@@ -254,22 +254,22 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table').datagrid('loading');
+                        $('#table-nav').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('load');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-nav').datagrid('loaded');
+                            $('#table-nav').datagrid('load');
+                            $('#table-nav').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '新增成功!',
                             });
                             obj.editRow = undefined;
                         }else{
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('load');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-nav').datagrid('loaded');
+                            $('#table-nav').datagrid('load');
+                            $('#table-nav').datagrid('unselectAll');
                             $.messager.alert("提示",data,"info");
                         }
                     },
@@ -287,13 +287,13 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table').datagrid('loading');
+                        $('#table-nav').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('reload');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-nav').datagrid('loaded');
+                            $('#table-nav').datagrid('reload');
+                            $('#table-nav').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '修改成功!',
@@ -311,6 +311,6 @@ $(function(){
 
     });
 
-    $('#table').datagrid("resize");
+    $('#table-nav').datagrid("resize");
 });
 

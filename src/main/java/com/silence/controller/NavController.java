@@ -72,4 +72,13 @@ public class NavController {
     public String navList(){
         return "navList";
     }
+
+    /**
+     * 跳转到设备列表页面
+     * @return
+     */
+    @RequestMapping(value = "/deviceList.action")
+    public String deviceList(){
+        return "deviceList";
+    }
 }

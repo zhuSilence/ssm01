@@ -2,6 +2,7 @@ package com.silence.service.impl;
 
 import com.silence.exception.CustomException;
 import com.silence.mapper.UserMapper;
+import com.silence.mapper.extend.UserMapperExtend;
 import com.silence.po.User;
 import com.silence.service.UserService;
 import com.silence.utils.DateTool;
@@ -27,11 +28,11 @@ import java.util.Map;
 public class UserManager implements UserService {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserMapperExtend userMapperExtend;
 
     //根据用户的id查询用户信息
     public User getUserById(Integer id) throws Exception {
-        User user = userMapper.selectByPrimaryKey(id);
+        User user = userMapperExtend.selectByPrimaryKey(id);
             return user;
     }
 
@@ -44,7 +45,7 @@ public class UserManager implements UserService {
         UserQueryVo userQueryVo = new UserQueryVo();
         userQueryVo.setMap(map);
         userQueryVo.setPageable(pageable);
-        List<User> userList = userMapper.selectUserList(userQueryVo);
+        List<User> userList = userMapperExtend.selectUserList(userQueryVo);
         if (userList != null && userList.size() > 0){
             return userList;
         }else {
@@ -61,7 +62,7 @@ public class UserManager implements UserService {
         UserQueryVo userQueryVo = new UserQueryVo();
         userQueryVo.setPageable(pageable);
         userQueryVo.setMap(map);
-        Integer userListSize = userMapper.selectAllUserListSize(userQueryVo);
+        Integer userListSize = userMapperExtend.selectAllUserListSize(userQueryVo);
         if(userListSize != 0){
             return userListSize;
         }
@@ -73,7 +74,7 @@ public class UserManager implements UserService {
         if(map != null){
             User user = new User();
             if(map.containsKey("row[username]") && !map.get("row[username]").toString().trim().equals("")){
-                User user1 = userMapper.findUserByUsername(map.get("row[username]").toString().trim());
+                User user1 = userMapperExtend.findUserByUsername(map.get("row[username]").toString().trim());
                 if(user1 != null){
                     return "该用户名称已存在，请重新添加";
                 }
@@ -98,7 +99,7 @@ public class UserManager implements UserService {
             }else {
                 user.setLocked(Boolean.FALSE);
             }
-            userMapper.insertSelective(user);
+            userMapperExtend.insertSelective(user);
         }
         return "success";
     }
@@ -110,7 +111,7 @@ public class UserManager implements UserService {
      */
     public void updateUser(Map<String,Object> map) throws Exception{
         if(map != null && map.containsKey("row[id]")){
-            User user = userMapper.selectByPrimaryKey(Integer.parseInt(map.get("row[id]").toString()));
+            User user = userMapperExtend.selectByPrimaryKey(Integer.parseInt(map.get("row[id]").toString()));
             if(user != null){
                 if(map.containsKey("row[username]") && !map.get("row[username]").toString().trim().equals("")){
                     user.setUsername(map.get("row[username]").toString());
@@ -133,7 +134,7 @@ public class UserManager implements UserService {
                 }else {
                     user.setLocked(Boolean.FALSE);
                 }
-                userMapper.updateByPrimaryKeySelective(user);
+                userMapperExtend.updateByPrimaryKeySelective(user);
             }
         }
     }
@@ -145,7 +146,7 @@ public class UserManager implements UserService {
      * @throws Exception
      */
     public User getUserByUsernameAndPassword(User user) throws Exception{
-        User user1 = userMapper.findUserByUsername(user.getUsername().trim());
+        User user1 = userMapperExtend.findUserByUsername(user.getUsername().trim());
         if(user1 != null){
             String value = MD5Util.MD5(user.getPassword()+user1.getSalt());
             if(user1.getPassword().equals(value)){
@@ -164,7 +165,7 @@ public class UserManager implements UserService {
      * @throws Exception
      */
     public Integer deleteUserById(Integer id) throws Exception{
-        int rows = userMapper.deleteByPrimaryKey(id);
+        int rows = userMapperExtend.deleteByPrimaryKey(id);
         if (rows > 0) {
             return rows;
         }

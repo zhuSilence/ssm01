@@ -14,17 +14,8 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer id) throws Exception;
 
-    User findUserByUsername(String username) throws Exception;
-
-    User selectByUsernameAndPassword(User user) throws Exception;
-
-    List<User> selectUserList(UserQueryVo userQueryVo) throws Exception;
-
-    int selectAllUserListSize(UserQueryVo userQueryVo) throws Exception;
-
     int updateByPrimaryKeySelective(User record) throws Exception;
 
     int updateByPrimaryKey(User record) throws Exception;
-
 
 }
