@@ -22,17 +22,17 @@
     select
     <include refid="Base_Column_List" />
     from device
-    <!--<where>-->
-      <!--<if test="map.d_name != null and map.d_name != ''">-->
-        <!--d_name LIKE '%${map.d_name}%'-->
-      <!--</if>-->
-      <!--<if test="map.low_price != null and map.low_price != ''">-->
-        <!--AND d_price >= #{map.low_price}-->
-      <!--</if>-->
-      <!--<if test="map.high_price != null and map.high_price != ''">-->
-        <!--AND #{map.high_price} >= d_price-->
-      <!--</if>-->
-    <!--</where>-->
+    <where>
+      <if test="map.d_name != null and map.d_name != ''">
+        d_name LIKE '%${map.d_name}%'
+      </if>
+      <if test="map.low_price != null and map.low_price != ''">
+        AND d_price >= #{map.low_price}
+      </if>
+      <if test="map.high_price != null and map.high_price != ''">
+        AND #{map.high_price} >= d_price
+      </if>
+    </where>
     ORDER BY ${pageable.sort} ${pageable.order}
 
     limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
@@ -42,17 +42,17 @@
     select
     COUNT(*)
     from device
-    <!--<where>-->
-    <!--<if test="map.d_name != null and map.d_name != ''">-->
-    <!--d_name LIKE '%${map.d_name}%'-->
-    <!--</if>-->
-    <!--<if test="map.low_price != null and map.low_price != ''">-->
-    <!--AND d_price >= #{map.low_price}-->
-    <!--</if>-->
-    <!--<if test="map.high_price != null and map.high_price != ''">-->
-    <!--AND #{map.high_price} >= d_price-->
-    <!--</if>-->
-    <!--</where>-->
+    <where>
+    <if test="map.d_name != null and map.d_name != ''">
+    d_name LIKE '%${map.d_name}%'
+    </if>
+    <if test="map.low_price != null and map.low_price != ''">
+    AND d_price >= #{map.low_price}
+    </if>
+    <if test="map.high_price != null and map.high_price != ''">
+    AND #{map.high_price} >= d_price
+    </if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

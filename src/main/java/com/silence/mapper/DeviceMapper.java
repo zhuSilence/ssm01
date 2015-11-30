@@ -20,5 +20,5 @@ public interface DeviceMapper {
 
     List<Device> selectDeviceList(DeviceQueryVo deviceQueryVo) throws Exception;
 
-    int selectAllUserListSize(DeviceQueryVo deviceQueryVo) throws Exception;
+    int selectAllDeviceListSize(DeviceQueryVo deviceQueryVo) throws Exception;
 }
