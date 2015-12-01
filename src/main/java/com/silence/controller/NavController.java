@@ -2,13 +2,18 @@ package com.silence.controller;
 
 import com.silence.po.Nav;
 import com.silence.service.NavService;
+import com.silence.utils.Page;
+import com.silence.utils.Pageable;
+import com.silence.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhuxiang on 2015/11/28.
@@ -44,15 +49,62 @@ public class NavController {
      * @throws Exception
      */
     @RequestMapping(value = "/getNavList.action")
-    @ResponseBody public List<Nav> getNavList() throws Exception {
-        List<Nav> navList = navService.findNavList();
+    @ResponseBody public Object getNavList(HttpServletRequest request,Pageable pageable) throws Exception {
+        Map<String,Object> map = WebUtil.getQueryParameter(request);
+        pageable.setPage((pageable.getPage()-1)*pageable.getRows());
+        List<Nav> navList = navService.findNavList(map,pageable);
         if(navList != null){
-            return navList;
+            Page<Nav> page = new Page<Nav>();
+            page.setTotal(navService.findNavListSize());
+            page.setRows(navList);
+            return page;
         }else {
             return null;
         }
     }
 
+
+    /**
+     * 新增导航信息
+     * @return
+     */
+    @RequestMapping(value = "/insertNav.action", method = RequestMethod.POST)
+    @ResponseBody public String insertNav(HttpServletRequest request) throws Exception{
+        Map<String,Object> map = WebUtil.getQueryParameter(request);
+        if(map != null){
+            return navService.insertNav(map);
+        }else {
+            return "error";
+        }
+    }
+
+    /**
+     * 根据前台传入的id，对指定的导航进行修改
+     * @return
+     */
+    @RequestMapping(value = "/updateNav.action", method = RequestMethod.POST)
+    @ResponseBody public String updateNav(HttpServletRequest request) throws Exception{
+        Map<String,Object> map = WebUtil.getQueryParameter(request);
+        navService.updateNav(map);
+        return "success";
+    }
+
+
+    /**
+     * 根据前台传入的ids，对指定的导航进行删除
+     * @return
+     */
+    @RequestMapping(value = "/deleteNav.action", method = RequestMethod.POST)
+    @ResponseBody public String deleteNav(HttpServletRequest request) throws Exception{
+        String ids = request.getParameter("ids");
+        String[] stringIds = ids.split(",");
+        Integer[] integerIds = new Integer[stringIds.length];
+        for (int i = 0; i < stringIds.length; i++){
+            integerIds[i] = Integer.parseInt(stringIds[i]);
+            navService.deleteNavById(integerIds[i]);
+        }
+        return "success";
+    }
 
     /**
      * 跳转到用户列表的页面

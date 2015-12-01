@@ -27,14 +27,14 @@ $(function(){
 
     var ctx = $('#ctx').val();
 
-    obj = {
+    obj_user = {
         editRow : undefined,
         /**
          * 查询按钮点击后执行
          * @type {{search: Function}}
          */
         search : function(){
-            $('#table').datagrid('load',{
+            $('#table-user').datagrid('load',{
                 'queryParameter.username' : $.trim($('#username').val()),
                 'queryParameter.date_from' : $('#date_from').datebox('getValue'),
                 'queryParameter.date_to' :  $('#date_to').datebox('getValue'),
@@ -46,10 +46,10 @@ $(function(){
          */
 
         add : function(){
-            $('#save,#redo').show();
+            $('#save-user,#redo-user').show();
             //新增一行
             if(this.editRow == undefined){
-                $('#table').datagrid('insertRow',{
+                $('#table-user').datagrid('insertRow',{
                     index : 0,
                     row : {
                         date : new Date(),
@@ -58,39 +58,39 @@ $(function(){
                 });
 
                 //将新增的行变成可编辑状态
-                $('#table').datagrid('beginEdit',0);
+                $('#table-user').datagrid('beginEdit',0);
                 this.editRow = 0;
             }
 
         },
         save : function(){
             //将新增的行变成结束编辑状态
-            $('#table').datagrid('endEdit',this.editRow);
+            $('#table-user').datagrid('endEdit',this.editRow);
         },
         redo : function () {
-            $('#save,#redo').hide();
+            $('#save-user,#redo-user').hide();
             this.editRow = undefined;
-            $('#table').datagrid('rejectChanges');
+            $('#table-user').datagrid('rejectChanges');
         },
         edit : function () {
-            var rows = $('#table').datagrid('getSelections');
+            var rows = $('#table-user').datagrid('getSelections');
             if(rows.length == 1){
                 if(this.editRow != undefined){
-                    $('#table').datagrid('endEdit',this.editRow);
+                    $('#table-user').datagrid('endEdit',this.editRow);
                 }
                 if(this.editRow == undefined){
-                    var index = $('#table').datagrid('getRowIndex',rows[0]);
-                    $('#save,#redo').show();
-                    $('#table').datagrid('beginEdit',index);
+                    var index = $('#table-user').datagrid('getRowIndex',rows[0]);
+                    $('#save-user,#redo-user').show();
+                    $('#table-user').datagrid('beginEdit',index);
                     this.editRow = index;
-                    $('#table').datagrid('unselectRow',index);
+                    $('#table-user').datagrid('unselectRow',index);
                 }
             }else{
                 $.messager.alert('警告','只允许同时修改一行!','warning');
             }
         },
         remove : function(){
-            var rows = $('#table').datagrid('getSelections');
+            var rows = $('#table-user').datagrid('getSelections');
             if(rows.length > 0){
                 $.messager.confirm('确定操作','确定要删除所选吗？',function(flag){
                     if(flag){
@@ -106,13 +106,13 @@ $(function(){
                                 ids : ids.join(','),
                             },
                             beforeSend : function () {
-                                $('#table').datagrid('loading');
+                                $('#table-user').datagrid('loading');
                             },
                             success : function (data) {
                                 if(data){
-                                    $('#table').datagrid('loaded');
-                                    $('#table').datagrid('reload');
-                                    $('#table').datagrid('unselectAll');
+                                    $('#table-user').datagrid('loaded');
+                                    $('#table-user').datagrid('reload');
+                                    $('#table-user').datagrid('unselectAll');
                                     $.messager.show({
                                         title : '提示',
                                         msg : '删除成功!',
@@ -138,7 +138,7 @@ $(function(){
     });
 
 
-    $('#table').datagrid({
+    $('#table-user').datagrid({
         width : 650,
         title : '用户列表',
         url : '/user/getUserList.action',
@@ -239,19 +239,19 @@ $(function(){
         sortOrder : 'DESC',
         remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
-            if(obj.editRow != undefined){
-                $('#table').datagrid('endEdit',obj.editRow);
+            if(obj_user.editRow != undefined){
+                $('#table-user').datagrid('endEdit',obj_user.editRow);
             }
-            if(obj.editRow == undefined){
-                $('#save,#redo').show();
-                obj.editRow = rowIndex;
-                $('#table').datagrid('beginEdit',rowIndex);
+            if(obj_user.editRow == undefined){
+                $('#save-user,#redo-user').show();
+                obj_user.editRow = rowIndex;
+                $('#table-user').datagrid('beginEdit',rowIndex);
             }
         },
         onAfterEdit : function (index, rowData, change) {
-            $('#save,#redo').hide();
-            var inserted = $('#table').datagrid('getChanges','inserted');
-            var updated = $('#table').datagrid('getChanges','updated');
+            $('#save-user,#redo-user').hide();
+            var inserted = $('#table-user').datagrid('getChanges','inserted');
+            var updated = $('#table-user').datagrid('getChanges','updated');
 
             //新增用户
             if(inserted.length > 0){
@@ -262,22 +262,22 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table').datagrid('loading');
+                        $('#table-user').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('load');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-user').datagrid('loaded');
+                            $('#table-user').datagrid('load');
+                            $('#table-user').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '新增成功!',
                             });
-                            obj.editRow = undefined;
+                            obj_user.editRow = undefined;
                         }else{
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('load');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-user').datagrid('loaded');
+                            $('#table-user').datagrid('load');
+                            $('#table-user').datagrid('unselectAll');
                             $.messager.alert("提示",data,"info");
                         }
                     },
@@ -295,30 +295,30 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table').datagrid('loading');
+                        $('#table-user').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table').datagrid('loaded');
-                            $('#table').datagrid('reload');
-                            $('#table').datagrid('unselectAll');
+                            $('#table-user').datagrid('loaded');
+                            $('#table-user').datagrid('reload');
+                            $('#table-user').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '修改成功!',
                             });
                         }
-                        obj.editRow = undefined;
+                        obj_user.editRow = undefined;
                     },
                 });
             }
 
             if(inserted.length == 0 && updated.length == 0){
-                obj.editRow = undefined;
+                obj_user.editRow = undefined;
             }
         },
 
     });
 
-    $('#table').datagrid("resize");
+    $('#table-user').datagrid("resize");
 });
 

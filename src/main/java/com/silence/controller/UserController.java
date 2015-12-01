@@ -71,7 +71,7 @@ public class UserController {
 
 
     /**
-     * 根据前台传入的ids，对指定的用户进行删除
+     * 新增用户信息
      * @return
      */
     @RequestMapping(value = "/insertUser.action", method = RequestMethod.POST)

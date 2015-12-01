@@ -1,6 +1,7 @@
 package com.silence.service;
 
 import com.silence.po.Nav;
+import com.silence.utils.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,32 @@ public interface NavService {
      * @return
      * @throws Exception
      */
-    public List<Nav> findNavList() throws Exception;
+    public List<Nav> findNavList(Map<String,Object> map, Pageable pageable) throws Exception;
+
+    /**
+     * 查询菜单的总记录数
+     * @return
+     * @throws Exception
+     */
+    public int findNavListSize() throws Exception;
+
+    /**
+     * 根据页面参数插入导航实体
+     */
+    public String insertNav(Map<String,Object> map) throws Exception;
+
+    /**
+     * 修改导航信息
+     * @param map
+     * @throws Exception
+     */
+    public void updateNav(Map<String,Object> map) throws Exception ;
+
+    /**
+     * 删除导航信息
+     * @param id
+     * @throws Exception
+     */
+    public Integer deleteNavById(Integer id) throws Exception ;
+
 }

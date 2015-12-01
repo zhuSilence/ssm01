@@ -1,33 +1,9 @@
-//扩展dateTimeBox
-$.extend($.fn.datagrid.defaults.editors, {
-    datetimebox : {
-        init: function(container, options){
-            var input = $('<input type="text">').appendTo(container);
-            options.editable = false;
-            input.datetimebox(options);
-            return input;
-        },
-        getValue: function(target){
-            return $(target).datetimebox('getValue');
-        },
-        setValue: function(target, value){
-            $(target).datetimebox('setValue', value);
-        },
-        resize: function(target, width){
-            $(target).datetimebox('resize', width);
-        },
-        destroy : function (target) {
-            $(target).datetimebox('destroy');
-        },
-    }
-});
-
 
 $(function(){
 
     var ctx = $('#ctx').val();
 
-    obj = {
+    obj_nav = {
         editRow : undefined,
         /**
          * 查询按钮点击后执行
@@ -35,9 +11,8 @@ $(function(){
          */
         search : function(){
             $('#table-nav').datagrid('load',{
-                'queryParameter.username' : $.trim($('#username').val()),
-                'queryParameter.date_from' : $('#date_from').datebox('getValue'),
-                'queryParameter.date_to' :  $('#date_to').datebox('getValue'),
+                'queryParameter.text' : $.trim($('#text').val()),
+                'queryParameter.state' : $.trim($('#state').combobox('getValue')),
             });
         },
 
@@ -100,7 +75,7 @@ $(function(){
                         }
                         //与后台交互删除数据
                         $.ajax({
-                            url : '/user/deleteUser.action',
+                            url : '/nav/deleteNav.action',
                             type : 'POST',
                             data : {
                                 ids : ids.join(','),
@@ -131,17 +106,16 @@ $(function(){
     /**
      * 清除按钮点击后执行
      */
-    $('#clean').on('click',function(){
-        $('#username').val('');
-        $('#date_from').datebox('setValue','');
-        $('#date_to').datebox('setValue','');
+    $('#clean-nav').on('click',function(){
+        $('#text').val('');
+        $('#state').combobox('setValue','');
     });
 
 
     $('#table-nav').datagrid({
-        width : 650,
+        width : 500,
         title : '用户列表',
-        url : '/nav/getNavList.action',
+        url : ctx + '/nav/getNavList.action',
         striped : true,
         fit : true,
         rownumbers : true,
@@ -158,7 +132,7 @@ $(function(){
             },
             {
                 field : 'text',
-                title : '菜单名称',
+                title : '导航名称',
                 sortable : false,
                 align : 'center',
                 width : 100,
@@ -171,14 +145,24 @@ $(function(){
             },
             {
                 field : 'state',
-                title : '状态',
+                title : '导航状态',
                 sortable : true,
                 align : 'center',
-                width : 100,
+                width : 80,
                 editor : {
                     type : 'combobox',
                     options : {
                         required : true,
+                        valueField: 'label',
+                        textField: 'value',
+                        panelHeight : 80,
+                        data: [{
+                            label: 'open',
+                            value: 'open'
+                        },{
+                            label: 'closed',
+                            value: 'closed'
+                        }],
                     },
                 },
             },
@@ -188,13 +172,19 @@ $(function(){
                 sortable : true,
                 align : 'center',
                 width : 150,
+                editor : {
+                    type : 'validatebox',
+                    options : {
+                        required : true,
+                    },
+                },
             },
             {
                 field : 'url',
                 title : '连接地址',
                 sortable : false,
                 align : 'center',
-                width : 100,
+                width : 80,
                 editor : {
                     type : 'validatebox',
                     options : {
@@ -207,18 +197,13 @@ $(function(){
                 title : '父节点id',
                 align : 'center',
                 width : 100,
-                /*formatter : function (value) {
-                    if(value == 'true'){
-                        value = '<input type="checkbox" checked> ';
-                    }else{
-                        value = '<input type="checkbox">';
-                    }
-                    return value;
-                },*/
                 editor : {
                     type : 'combobox',
                     options : {
-
+                        valueField: 'id',
+                        textField: 'id',
+                        panelHeight : 80,
+                        //url : ctx + '/nav/getNavList.action',
                     },
                 },
             }
@@ -228,15 +213,15 @@ $(function(){
         pageSize : 10,
         pageList : [5,10,15],
         sortName : 'id',
-        sortOrder : 'DESC',
+        sortOrder : 'ASC',
         remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
-            if(obj.editRow != undefined){
-                $('#table-nav').datagrid('endEdit',obj.editRow);
+            if(obj_nav.editRow != undefined){
+                $('#table-nav').datagrid('endEdit',obj_nav.editRow);
             }
-            if(obj.editRow == undefined){
+            if(obj_nav.editRow == undefined){
                 $('#save-nav,#redo-nav').show();
-                obj.editRow = rowIndex;
+                obj_nav.editRow = rowIndex;
                 $('#table-nav').datagrid('beginEdit',rowIndex);
             }
         },
@@ -248,7 +233,7 @@ $(function(){
             //新增用户
             if(inserted.length > 0){
                 $.ajax({
-                    url : '/user/insertUser.action',
+                    url : '/nav/insertNav.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,
@@ -265,7 +250,7 @@ $(function(){
                                 title : '提示',
                                 msg : '新增成功!',
                             });
-                            obj.editRow = undefined;
+                            obj_nav.editRow = undefined;
                         }else{
                             $('#table-nav').datagrid('loaded');
                             $('#table-nav').datagrid('load');
@@ -281,7 +266,7 @@ $(function(){
             //修改用户
             if(updated.length > 0){
                 $.ajax({
-                    url : '/user/updateUser.action',
+                    url : '/nav/updateNav.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,
@@ -299,13 +284,13 @@ $(function(){
                                 msg : '修改成功!',
                             });
                         }
-                        obj.editRow = undefined;
+                        obj_nav.editRow = undefined;
                     },
                 });
             }
 
             if(inserted.length == 0 && updated.length == 0){
-                obj.editRow = undefined;
+                obj_nav.editRow = undefined;
             }
         },
 

@@ -26,10 +26,27 @@
     where nid = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="findNavList" resultMap="BaseResultMap">
+  <select id="findNavIds" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from nav
+  </select>
+
+  <select id="findNavList" resultMap="BaseResultMap" parameterType="com.silence.vo.UserQueryVo">
+    select
+    <include refid="Base_Column_List" />
+    from nav
+    <where>
+      <if test="map.text != null and map.text != ''">
+        text LIKE '%${map.text}%'
+      </if>
+      <if test="map.state != null and map.state != ''">
+        AND state LIKE #{map.state}
+      </if>
+    </where>
+    ORDER BY ${pageable.sort} ${pageable.order}
+
+    limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

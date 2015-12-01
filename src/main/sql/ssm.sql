@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-11-30 12:50:30
+Date: 2015-12-01 17:22:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -106,19 +106,19 @@ CREATE TABLE `nav` (
   `url` varchar(50) DEFAULT NULL,
   `nid` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of nav
 -- ----------------------------
 INSERT INTO `nav` VALUES ('1', '系统管理', 'closed', 'icon-system', null, '0');
 INSERT INTO `nav` VALUES ('2', '用户管理', 'closed', 'icon-manager', null, '0');
-INSERT INTO `nav` VALUES ('3', '设备管理', 'closed', 'icon-user', null, '0');
+INSERT INTO `nav` VALUES ('3', '设备管理', 'closed', 'icon-user', '', '0');
 INSERT INTO `nav` VALUES ('4', '使用列表', 'open', 'icon-tip', null, '3');
 INSERT INTO `nav` VALUES ('5', '购买列表', 'open', 'icon-add-new', null, '3');
 INSERT INTO `nav` VALUES ('6', '维修列表', 'open', 'icon-no', null, '3');
 INSERT INTO `nav` VALUES ('7', '用户列表', 'open', 'icon-group', '/nav/userList.action', '2');
-INSERT INTO `nav` VALUES ('8', '设备列表', 'open', 'icon-tip', null, '3');
+INSERT INTO `nav` VALUES ('8', '设备列表', 'open', 'icon-tip', '/nav/deviceList.action', '3');
 INSERT INTO `nav` VALUES ('9', '菜单管理', 'open', null, '/nav/navList.action', '1');
 
 -- ----------------------------
@@ -133,7 +133,7 @@ CREATE TABLE `user` (
   `salt` varchar(20) DEFAULT NULL COMMENT '�����������ʹ��',
   `locked` bit(1) DEFAULT b'0' COMMENT '0表示为锁定，1表示锁定',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5474 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5476 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
@@ -163,7 +163,6 @@ INSERT INTO `user` VALUES ('5453', '去死吧', '498B224E50698F1BB6B23785829145A
 INSERT INTO `user` VALUES ('5455', '趋势', '4681C82B78B77CE5E644E108947EE0E5', '2015-11-26 16:54:32', 'quui', '');
 INSERT INTO `user` VALUES ('5456', 'ad发', '25D72081E19288939ACEC09A51E1D7D1', '2015-11-26 16:59:14', 'affectl', '');
 INSERT INTO `user` VALUES ('5457', '团费', '2646BA4432BD4292B2FBC32ED83FF661', '2015-11-26 17:00:26', 'gdfglr', '');
-INSERT INTO `user` VALUES ('5458', '32', '5178C5A56C8A80C1D1E5F91DF0307619', '2015-11-27 10:55:33', '3289', '');
 INSERT INTO `user` VALUES ('5463', '朱翔', 'EA48576F30BE1669971699C09AD05C94', '2015-11-27 12:37:20', '123456', '');
 INSERT INTO `user` VALUES ('5464', '小明', 'BC9B5718AFDFFE85FB13555347969FF5', '2015-11-27 13:46:45', 'abcd', '');
 INSERT INTO `user` VALUES ('5465', '小红', 'E4E92E32BB577F9BC6D74896552E0738', '2015-11-27 13:47:39', 'bc', '');
@@ -172,4 +171,5 @@ INSERT INTO `user` VALUES ('5468', '刘亦菲', 'E781299803014BFE9C4AFF700539733
 INSERT INTO `user` VALUES ('5470', '大雄', '2982B73118CF042CC93271C67F99C4EF', '2015-11-27 14:39:17', '342', '');
 INSERT INTO `user` VALUES ('5471', '静香', '34C0200ECD6BFC8505B54CEEADF448B8', '2015-11-27 15:01:16', '654321', '');
 INSERT INTO `user` VALUES ('5472', '唐僧1', 'A1B515B2A38E466F7D91114CBE0D7470', '2015-11-29 14:42:44', '165', '');
-INSERT INTO `user` VALUES ('5473', '乌索普', '0468992A159DE3D177C2B9BB9EB3D975', '2015-11-29 17:27:32', '1438', '');
+INSERT INTO `user` VALUES ('5474', '乌索普', '3D9D39CBCA053977637C33BC205575A1', '2015-11-30 14:03:07', '50', '');
+INSERT INTO `user` VALUES ('5475', '马里奥', '3F4A00AF3758DACBA6A13281749D25FD', '2015-12-01 11:26:55', '7245', '');
