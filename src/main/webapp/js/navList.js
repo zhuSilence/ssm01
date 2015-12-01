@@ -114,7 +114,7 @@ $(function(){
 
     $('#table-nav').datagrid({
         width : 500,
-        title : '用户列表',
+        title : '菜单列表',
         url : ctx + '/nav/getNavList.action',
         striped : true,
         fit : true,
