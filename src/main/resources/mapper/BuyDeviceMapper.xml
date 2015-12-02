@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.silence.mapper.BuyDeviceMapper" >
+<mapper namespace="com.silence.mapper.extend.BuyDeviceMapperExtend" >
   <resultMap id="BaseResultMap" type="com.silence.po.BuyDevice" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="buyer" property="buyer" jdbcType="VARCHAR" />
@@ -12,6 +12,62 @@
   <sql id="Base_Column_List" >
     id, buyer, d_id, b_money, b_time, b_mark
   </sql>
+
+  <select id="selectBuyDeviceList" resultMap="BaseResultMap" parameterType="com.silence.vo.UserQueryVo">
+    select
+    <include refid="Base_Column_List" />
+    from buy_device
+    <where>
+      <if test="map.buyer != null and map.buyer != ''">
+        buyer LIKE '%${map.buyer}%'
+      </if>
+      <if test="map.d_id != null and map.d_id != ''">
+        d_id LIKE '%${map.d_id}%'
+      </if>
+      <if test="map.low_money != null and map.low_money != ''">
+        AND b_money >= #{map.low_money}
+      </if>
+      <if test="map.high_money != null and map.high_money != ''">
+        AND #{map.high_money} >= b_money
+      </if>
+      <if test="map.b_time_from != null and map.b_time_from != ''">
+        AND b_time >= #{map.b_time_from}
+      </if>
+      <if test="map.b_time_to != null and map.b_time_to != ''">
+        AND #{map.b_time_to} >= b_time
+      </if>
+    </where>
+    ORDER BY ${pageable.sort} ${pageable.order}
+
+    limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllBuyDeviceListSize" resultType="java.lang.Integer" parameterType="com.silence.vo.UserQueryVo">
+    select
+    COUNT(*)
+    from buy_device
+    <where>
+      <if test="map.buyer != null and map.buyer != ''">
+        buyer LIKE '%${map.buyer}%'
+      </if>
+      <if test="map.d_id != null and map.d_id != ''">
+        d_id LIKE '%${map.d_id}%'
+      </if>
+      <if test="map.low_money != null and map.low_money != ''">
+        AND b_money >= #{map.low_money}
+      </if>
+      <if test="map.high_money != null and map.high_money != ''">
+        AND #{map.high_money} >= b_money
+      </if>
+      <if test="map.b_time_from != null and map.b_time_from != ''">
+        AND b_time >= #{map.b_time_from}
+      </if>
+      <if test="map.b_time_to != null and map.b_time_to != ''">
+        AND #{map.b_time_to} >= b_time
+      </if>
+    </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

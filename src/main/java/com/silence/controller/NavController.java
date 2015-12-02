@@ -142,4 +142,13 @@ public class NavController {
     public String deviceList(){
         return "deviceList";
     }
+
+    /**
+     * 跳转到购买设备列表页面
+     * @return
+     */
+    @RequestMapping(value = "/buydevice.action")
+    public String buydevice(){
+        return "buyDevice";
+    }
 }
