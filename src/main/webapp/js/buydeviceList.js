@@ -59,8 +59,8 @@ $(function(){
                 $('#table-buydevice').datagrid('insertRow',{
                     index : 0,
                     row:{
-                        b_time : new Date()
-                    }
+                        b_time : new Date(),
+                    },
                 });
 
                 //将新增的行变成可编辑状态

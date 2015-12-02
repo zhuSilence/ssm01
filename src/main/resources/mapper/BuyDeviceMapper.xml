@@ -122,7 +122,7 @@
         #{b_money,jdbcType=DOUBLE},
       </if>
       <if test="b_time != null" >
-        #{b_time,jdbcType=TIME},
+        #{b_time,jdbcType=TIMESTAMP},
       </if>
       <if test="b_mark != null" >
         #{b_mark,jdbcType=VARCHAR},
@@ -142,7 +142,7 @@
         b_money = #{b_money,jdbcType=DOUBLE},
       </if>
       <if test="b_time != null" >
-        b_time = #{b_time,jdbcType=TIME},
+        b_time = #{b_time,jdbcType=TIMESTAMP},
       </if>
       <if test="b_mark != null" >
         b_mark = #{b_mark,jdbcType=VARCHAR},
@@ -155,7 +155,7 @@
     set buyer = #{buyer,jdbcType=VARCHAR},
       d_id = #{d_id,jdbcType=INTEGER},
       b_money = #{b_money,jdbcType=DOUBLE},
-      b_time = #{b_time,jdbcType=TIME},
+      b_time = #{b_time,jdbcType=TIMESTAMP},
       b_mark = #{b_mark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
