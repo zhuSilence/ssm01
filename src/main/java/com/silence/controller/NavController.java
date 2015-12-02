@@ -151,4 +151,13 @@ public class NavController {
     public String buydevice(){
         return "buyDevice";
     }
+
+    /**
+     * 跳转到修理设备列表页面
+     * @return
+     */
+    @RequestMapping(value = "/fixdevice.action")
+    public String fixdevice(){
+        return "fixDevice";
+    }
 }
