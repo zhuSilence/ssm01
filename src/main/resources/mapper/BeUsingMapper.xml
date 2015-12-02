@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.silence.mapper.BeUsingMapper" >
+<mapper namespace="com.silence.mapper.extend.DeviceUsingMapperExtend" >
   <resultMap id="BaseResultMap" type="com.silence.po.BeUsing" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="d_id" property="d_id" jdbcType="INTEGER" />
@@ -9,15 +9,59 @@
     <result column="u_mark" property="u_mark" jdbcType="CHAR" />
     <result column="is_using" property="is_using" jdbcType="BIT" />
   </resultMap>
+
+  <resultMap id="BaseResultMapVo" type="com.silence.vo.UserQueryVo" >
+    <id column="be_using.id" property="beUsing.id" jdbcType="INTEGER" />
+    <result column="be_using.d_id" property="beUsing.d_id" jdbcType="INTEGER" />
+    <result column="be_using.u_place" property="beUsing.u_place" jdbcType="CHAR" />
+    <result column="be_using.u_state" property="beUsing.u_state" jdbcType="INTEGER" />
+    <result column="be_using.u_mark" property="beUsing.u_mark" jdbcType="CHAR" />
+    <result column="be_using.is_using" property="beUsing.is_using" jdbcType="BIT" />
+    <result column="device.d_name" property="device.d_name" jdbcType="VARCHAR" />
+    <result column="device.d_desc" property="device.d_desc" jdbcType="VARCHAR" />
+    <result column="device.d_price" property="device.d_price" jdbcType="DOUBLE" />
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, d_id, u_place, u_state, u_mark, is_using
   </sql>
+
+  <sql id="Base_Column_List_vo" >
+    be_using.id, be_using.d_id, be_using.u_place, be_using.u_state, be_using.u_mark, be_using.is_using,
+    device.d_name, device.d_desc, device.d_price
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from be_using
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectBeUsingList" resultMap="BaseResultMapVo" parameterType="com.silence.vo.UserQueryVo">
+    select
+    <include refid="Base_Column_List_vo" />
+    from be_using,device where be_using.d_id = device.id
+
+      <!--<if test="device.d_name != null and device.d_name != ''">
+       AND device.d_name LIKE '%${device.d_name}%'
+      </if>
+      <if test="beUsing.u_place != null and beUsing.u_place != ''">
+        AND be_using.u_place LIKE '%${beUsing.u_place}%'
+      </if>-->
+
+    ORDER BY ${pageable.sort} ${pageable.order}
+
+    limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllBeUsingListSize" resultType="java.lang.Integer" parameterType="com.silence.vo.UserQueryVo">
+    select
+    COUNT(*)
+    from be_using
+
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from be_using
     where id = #{id,jdbcType=INTEGER}

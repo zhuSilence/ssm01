@@ -3,16 +3,16 @@ $(function(){
 
     var ctx = $('#ctx').val();
 
-    obj_nav = {
+    obj_using = {
         editRow : undefined,
         /**
          * 查询按钮点击后执行
          * @type {{search: Function}}
          */
         search : function(){
-            $('#table-nav').datagrid('load',{
-                'queryParameter.text' : $.trim($('#text').val()),
-                'queryParameter.state' : $.trim($('#state').combobox('getValue')),
+            $('#table-using').datagrid('load',{
+                'queryParameter.text' : $.trim($('#dName').val()),
+                'queryParameter.state' : $.trim($('#uPlace').val()),
             });
         },
 
@@ -21,10 +21,10 @@ $(function(){
          */
 
         add : function(){
-            $('#save-nav,#redo-nav').show();
+            $('#save-using,#redo-using').show();
             //新增一行
             if(this.editRow == undefined){
-                $('#table-nav').datagrid('insertRow',{
+                $('#table-using').datagrid('insertRow',{
                     index : 0,
                     row : {
                         date : new Date(),
@@ -33,39 +33,39 @@ $(function(){
                 });
 
                 //将新增的行变成可编辑状态
-                $('#table-nav').datagrid('beginEdit',0);
+                $('#table-using').datagrid('beginEdit',0);
                 this.editRow = 0;
             }
 
         },
         save : function(){
             //将新增的行变成结束编辑状态
-            $('#table-nav').datagrid('endEdit',this.editRow);
+            $('#table-using').datagrid('endEdit',this.editRow);
         },
         redo : function () {
-            $('#save-nav,#redo-nav').hide();
+            $('#save-using,#redo-using').hide();
             this.editRow = undefined;
-            $('#table-nav').datagrid('rejectChanges');
+            $('#table-using').datagrid('rejectChanges');
         },
         edit : function () {
-            var rows = $('#table-nav').datagrid('getSelections');
+            var rows = $('#table-using').datagrid('getSelections');
             if(rows.length == 1){
                 if(this.editRow != undefined){
-                    $('#table-nav').datagrid('endEdit',this.editRow);
+                    $('#table-using').datagrid('endEdit',this.editRow);
                 }
                 if(this.editRow == undefined){
-                    var index = $('#table-nav').datagrid('getRowIndex',rows[0]);
-                    $('#save-nav,#redo-nav').show();
-                    $('#table-nav').datagrid('beginEdit',index);
+                    var index = $('#table-using').datagrid('getRowIndex',rows[0]);
+                    $('#save-using,#redo-using').show();
+                    $('#table-using').datagrid('beginEdit',index);
                     this.editRow = index;
-                    $('#table-nav').datagrid('unselectRow',index);
+                    $('#table-using').datagrid('unselectRow',index);
                 }
             }else{
                 $.messager.alert('警告','只允许同时修改一行!','warning');
             }
         },
         remove : function(){
-            var rows = $('#table-nav').datagrid('getSelections');
+            var rows = $('#table-using').datagrid('getSelections');
             if(rows.length > 0){
                 $.messager.confirm('确定操作','确定要删除所选吗？',function(flag){
                     if(flag){
@@ -81,13 +81,13 @@ $(function(){
                                 ids : ids.join(','),
                             },
                             beforeSend : function () {
-                                $('#table-nav').datagrid('loading');
+                                $('#table-using').datagrid('loading');
                             },
                             success : function (data) {
                                 if(data){
-                                    $('#table-nav').datagrid('loaded');
-                                    $('#table-nav').datagrid('reload');
-                                    $('#table-nav').datagrid('unselectAll');
+                                    $('#table-using').datagrid('loaded');
+                                    $('#table-using').datagrid('reload');
+                                    $('#table-using').datagrid('unselectAll');
                                     $.messager.show({
                                         title : '提示',
                                         msg : '删除成功!',
@@ -106,16 +106,16 @@ $(function(){
     /**
      * 清除按钮点击后执行
      */
-    $('#clean-nav').on('click',function(){
+    $('#clean-using').on('click',function(){
         $('#text').val('');
         $('#state').combobox('setValue','');
     });
 
 
-    $('#table-nav').datagrid({
+    $('#table-using').datagrid({
         width : 500,
-        title : '菜单列表',
-        url : ctx + '/nav/getNavList.action',
+        title : '设备使用列表',
+        url : ctx + '/using/getDeviceUsingList.action',
         striped : true,
         fit : true,
         rownumbers : true,
@@ -131,8 +131,8 @@ $(function(){
                 checkbox : true,
             },
             {
-                field : 'text',
-                title : '导航名称',
+                field : 'd_id',
+                title : '设备id',
                 sortable : false,
                 align : 'center',
                 width : 100,
@@ -144,24 +144,46 @@ $(function(){
                 },
             },
             {
-                field : 'state',
-                title : '导航状态',
+                field : 'u_place',
+                title : '所在位置',
                 sortable : true,
                 align : 'center',
                 width : 80,
                 editor : {
-                    type : 'combobox',
+                    type : 'validatebox',
                     options : {
                         required : true,
+                        valueField: 'label',
+                        textField: 'value',
+                        panelHeight : 80,
+                        data: [{
+                            label: 'open',
+                            value: 'open'
+                        },{
+                            label: 'closed',
+                            value: 'closed'
+                        }],
                     },
                 },
             },
             {
-                field : 'iconCls',
-                title : '图标class',
+                field : 'u_state',
+                title : '使用状态',
                 sortable : true,
                 align : 'center',
                 width : 150,
+                formatter : function(value){
+                    if(value == 0){
+                        value = "正常"
+                    }
+                    if(value == 1){
+                        value = "故障"
+                    }
+                    if(value == 2){
+                        value = "维修"
+                    }
+                    return value;
+                },
                 editor : {
                     type : 'validatebox',
                     options : {
@@ -170,8 +192,8 @@ $(function(){
                 },
             },
             {
-                field : 'url',
-                title : '连接地址',
+                field : 'u_mark',
+                title : '备注',
                 sortable : false,
                 align : 'center',
                 width : 80,
@@ -183,22 +205,28 @@ $(function(){
                  },
             },
             {
-                field : 'nid',
-                title : '父节点id',
+                field : 'is_using',
+                title : '是否使用',
                 align : 'center',
                 width : 100,
+                formatter : function (value) {
+                    if(value == 'true'){
+                        value = '<input type="checkbox" checked> ';
+                    }else{
+                        value = '<input type="checkbox">';
+                    }
+                    return value;
+                },
                 editor : {
-                    type : 'combobox',
+                    type : 'checkbox',
                     options : {
-                        valueField: 'id',
-                        textField: 'id',
-                        panelHeight : 80,
-                        //url : ctx + '/nav/getNavList.action',
+                        on: "true",
+                        off: "false"
                     },
                 },
             }
         ]],
-        toolbar : '#tb-nav',
+        toolbar : '#tb-using',
         pagination : true,
         pageSize : 10,
         pageList : [5,10,15],
@@ -206,19 +234,19 @@ $(function(){
         sortOrder : 'ASC',
         remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
-            if(obj_nav.editRow != undefined){
-                $('#table-nav').datagrid('endEdit',obj_nav.editRow);
+            if(obj_using.editRow != undefined){
+                $('#table-using').datagrid('endEdit',obj_using.editRow);
             }
-            if(obj_nav.editRow == undefined){
-                $('#save-nav,#redo-nav').show();
-                obj_nav.editRow = rowIndex;
-                $('#table-nav').datagrid('beginEdit',rowIndex);
+            if(obj_using.editRow == undefined){
+                $('#save-using,#redo-using').show();
+                obj_using.editRow = rowIndex;
+                $('#table-using').datagrid('beginEdit',rowIndex);
             }
         },
         onAfterEdit : function (index, rowData, change) {
-            $('#save-nav,#redo-nav').hide();
-            var inserted = $('#table-nav').datagrid('getChanges','inserted');
-            var updated = $('#table-nav').datagrid('getChanges','updated');
+            $('#save-using,#redo-using').hide();
+            var inserted = $('#table-using').datagrid('getChanges','inserted');
+            var updated = $('#table-using').datagrid('getChanges','updated');
 
             //新增用户
             if(inserted.length > 0){
@@ -229,22 +257,22 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table-nav').datagrid('loading');
+                        $('#table-using').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table-nav').datagrid('loaded');
-                            $('#table-nav').datagrid('load');
-                            $('#table-nav').datagrid('unselectAll');
+                            $('#table-using').datagrid('loaded');
+                            $('#table-using').datagrid('load');
+                            $('#table-using').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '新增成功!',
                             });
-                            obj_nav.editRow = undefined;
+                            obj_using.editRow = undefined;
                         }else{
-                            $('#table-nav').datagrid('loaded');
-                            $('#table-nav').datagrid('load');
-                            $('#table-nav').datagrid('unselectAll');
+                            $('#table-using').datagrid('loaded');
+                            $('#table-using').datagrid('load');
+                            $('#table-using').datagrid('unselectAll');
                             $.messager.alert("提示",data,"info");
                         }
                     },
@@ -262,30 +290,30 @@ $(function(){
                         'queryParameter.row' : rowData,
                     },
                     beforeSend : function () {
-                        $('#table-nav').datagrid('loading');
+                        $('#table-using').datagrid('loading');
                     },
                     success : function (data) {
                         if(data == 'success'){
-                            $('#table-nav').datagrid('loaded');
-                            $('#table-nav').datagrid('reload');
-                            $('#table-nav').datagrid('unselectAll');
+                            $('#table-using').datagrid('loaded');
+                            $('#table-using').datagrid('reload');
+                            $('#table-using').datagrid('unselectAll');
                             $.messager.show({
                                 title : '提示',
                                 msg : '修改成功!',
                             });
                         }
-                        obj_nav.editRow = undefined;
+                        obj_using.editRow = undefined;
                     },
                 });
             }
 
             if(inserted.length == 0 && updated.length == 0){
-                obj_nav.editRow = undefined;
+                obj_using.editRow = undefined;
             }
         },
 
     });
 
-    $('#table-nav').datagrid("resize");
+    $('#table-using').datagrid("resize");
 });
 

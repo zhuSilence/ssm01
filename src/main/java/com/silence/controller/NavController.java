@@ -126,6 +126,15 @@ public class NavController {
     }
 
     /**
+     * 跳转到设备使用列表页面
+     * @return
+     */
+    @RequestMapping(value = "/usingList.action")
+    public String usingList(){
+        return "usingList";
+    }
+
+    /**
      * 跳转到设备列表页面
      * @return
      */
