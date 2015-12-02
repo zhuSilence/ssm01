@@ -58,6 +58,7 @@ $(function(){
             if(this.editRow == undefined){
                 $('#table-buydevice').datagrid('insertRow',{
                     index : 0,
+                    row:[]
                 });
 
                 //将新增的行变成可编辑状态

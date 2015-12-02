@@ -2,36 +2,11 @@
  * Created by Tao on 2015/11/29.
  */
 
-//扩展dateTimeBox
-$.extend($.fn.datagrid.defaults.editors, {
-    datetimebox : {
-        init: function(container, options){
-            var input = $('<input type="text">').appendTo(container);
-            options.editable = false;
-            input.datetimebox(options);
-            return input;
-        },
-        getValue: function(target){
-            return $(target).datetimebox('getValue');
-        },
-        setValue: function(target, value){
-            $(target).datetimebox('setValue', value);
-        },
-        resize: function(target, width){
-            $(target).datetimebox('resize', width);
-        },
-        destroy : function (target) {
-            $(target).datetimebox('destroy');
-        },
-    }
-});
-
-
 $(function(){
 
     var ctx = $('#ctx').val();
 
-    obj = {
+    obj_device = {
         editRow : undefined,
         /**
          * 查询按钮点击后执行
@@ -50,11 +25,12 @@ $(function(){
          */
 
         add : function(){
-            $('#save,#redo').show();
+            $('#save_device,#redo_device').show();
             //新增一行
             if(this.editRow == undefined){
                 $('#table-device').datagrid('insertRow',{
                     index : 0,
+                    row:[]
                 });
 
                 //将新增的行变成可编辑状态
@@ -67,7 +43,7 @@ $(function(){
             $('#table-device').datagrid('endEdit',this.editRow);
         },
         redo : function () {
-            $('#save,#redo').hide();
+            $('#save_device,#redo_device').hide();
             this.editRow = undefined;
             $('#table-device').datagrid('rejectChanges');
         },
@@ -79,7 +55,7 @@ $(function(){
                 }
                 if(this.editRow == undefined){
                     var index = $('#table-device').datagrid('getRowIndex',rows[0]);
-                    $('#save,#redo').show();
+                    $('#save_device,#redo_device').show();
                     $('#table-device').datagrid('beginEdit',index);
                     this.editRow = index;
                     $('#table-device').datagrid('unselectRow',index);
@@ -201,19 +177,19 @@ $(function(){
         pageList : [5,10,15],
         sortName : 'id',
         sortOrder : 'DESC',
-        remoteSort : false,
+        //remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
-            if(obj.editRow != undefined){
-                $('#table-device').datagrid('endEdit',obj.editRow);
+            if(obj_device.editRow != undefined){
+                $('#table-device').datagrid('endEdit',obj_device.editRow);
             }
-            if(obj.editRow == undefined){
-                $('#save,#redo').show();
-                obj.editRow = rowIndex;
+            if(obj_device.editRow == undefined){
+                $('#save_device,#redo_device').show();
+                obj_device.editRow = rowIndex;
                 $('#table-device').datagrid('beginEdit',rowIndex);
             }
         },
         onAfterEdit : function (index, rowData, change) {
-            $('#save,#redo').hide();
+            $('#save_device,#redo_device').hide();
             var inserted = $('#table-device').datagrid('getChanges','inserted');
             var updated = $('#table-device').datagrid('getChanges','updated');
 
@@ -237,7 +213,7 @@ $(function(){
                                 title : '提示',
                                 msg : '新增成功!',
                             });
-                            obj.editRow = undefined;
+                            obj_device.editRow = undefined;
                         }else{
                             $('#table-device').datagrid('loaded');
                             $('#table-device').datagrid('load');
@@ -271,13 +247,13 @@ $(function(){
                                 msg : '修改成功!',
                             });
                         }
-                        obj.editRow = undefined;
+                        obj_device.editRow = undefined;
                     },
                 });
             }
 
             if(inserted.length == 0 && updated.length == 0){
-                obj.editRow = undefined;
+                obj_device.editRow = undefined;
             }
         },
 
