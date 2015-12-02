@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-<table id="table-device"></table>
+
 <div id="tb-device" style="padding: 5px;">
   <div style="margin-bottom: 5px;">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add"    plain="true" onclick="obj_device.add();">增加</a>
@@ -27,7 +27,7 @@
   </div>
 </div>
 
-
+<table id="table-device"></table>
 
 <input type="hidden" value="${ctx}" id="ctx">
 <script type="text/javascript" src="${ctx}/js/deviceList.js"></script>

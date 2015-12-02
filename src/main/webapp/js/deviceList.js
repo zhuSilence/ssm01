@@ -30,7 +30,7 @@ $(function(){
             if(this.editRow == undefined){
                 $('#table-device').datagrid('insertRow',{
                     index : 0,
-                    row:[]
+                    row:{}
                 });
 
                 //将新增的行变成可编辑状态
@@ -193,7 +193,7 @@ $(function(){
             var inserted = $('#table-device').datagrid('getChanges','inserted');
             var updated = $('#table-device').datagrid('getChanges','updated');
 
-            //新增用户
+            //新增
             if(inserted.length > 0){
                 $.ajax({
                     url : '/device/insertDevice.action',

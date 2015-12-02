@@ -142,7 +142,6 @@ $(function(){
         width : 650,
         title : '用户列表',
         url : '/user/getUserList.action',
-        //iconCls : 'icon-search',
         striped : true,
         fit : true,
         rownumbers : true,
