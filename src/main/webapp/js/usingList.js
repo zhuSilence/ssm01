@@ -131,8 +131,8 @@ $(function(){
                 checkbox : true,
             },
             {
-                field : 'd_id',
-                title : '设备id',
+                field : 'd_name',
+                title : '设备名称',
                 sortable : false,
                 align : 'center',
                 width : 100,
