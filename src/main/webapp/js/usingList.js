@@ -11,8 +11,8 @@ $(function(){
          */
         search : function(){
             $('#table-using').datagrid('load',{
-                'queryParameter.text' : $.trim($('#dName').val()),
-                'queryParameter.state' : $.trim($('#uPlace').val()),
+                'queryParameter.d_name' : $.trim($('#dName').val()),
+                'queryParameter.u_place' : $.trim($('#uPlace').val()),
             });
         },
 
@@ -107,8 +107,8 @@ $(function(){
      * 清除按钮点击后执行
      */
     $('#clean-using').on('click',function(){
-        $('#text').val('');
-        $('#state').combobox('setValue','');
+        $('#dName').val('');
+        $('#uPlace').val('');
     });
 
 

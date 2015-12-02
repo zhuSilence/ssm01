@@ -43,12 +43,12 @@
     <include refid="Base_Column_List_vo" />
     from be_using,device where be_using.d_id = device.id
 
-      <!--<if test="device.d_name != null and device.d_name != ''">
-       AND device.d_name LIKE '%${device.d_name}%'
+      <if test="map.d_name != null and map.d_name != ''">
+       AND device.d_name LIKE '%${map.d_name}%'
       </if>
-      <if test="beUsing.u_place != null and beUsing.u_place != ''">
-        AND be_using.u_place LIKE '%${beUsing.u_place}%'
-      </if>-->
+      <if test="map.u_place != null and map.u_place != ''">
+        AND be_using.u_place LIKE '%${map.u_place}%'
+      </if>
 
     ORDER BY ${pageable.sort} ${pageable.order}
 
