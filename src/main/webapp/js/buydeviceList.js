@@ -31,7 +31,7 @@ $(function(){
 
     var ctx = $('#ctx').val();
 
-    obj = {
+    obj_buydevice = {
         editRow : undefined,
         /**
          * 查询按钮点击后执行
@@ -53,12 +53,14 @@ $(function(){
          */
 
         add : function(){
-            $('#save,#redo').show();
+            $('#save_buydevice,#redo_buydevice').show();
             //新增一行
             if(this.editRow == undefined){
                 $('#table-buydevice').datagrid('insertRow',{
                     index : 0,
-                    row:[]
+                    row:{
+                        b_time : new Date()
+                    }
                 });
 
                 //将新增的行变成可编辑状态
@@ -71,7 +73,7 @@ $(function(){
             $('#table-buydevice').datagrid('endEdit',this.editRow);
         },
         redo : function () {
-            $('#save,#redo').hide();
+            $('#save_buydevice,#redo_buydevice').hide();
             this.editRow = undefined;
             $('#table-buydevice').datagrid('rejectChanges');
         },
@@ -83,7 +85,7 @@ $(function(){
                 }
                 if(this.editRow == undefined){
                     var index = $('#table-buydevice').datagrid('getRowIndex',rows[0]);
-                    $('#save,#redo').show();
+                    $('#save_buydevice,#redo_buydevice').show();
                     $('#table-buydevice').datagrid('beginEdit',index);
                     this.editRow = index;
                     $('#table-buydevice').datagrid('unselectRow',index);
@@ -134,7 +136,7 @@ $(function(){
     /**
      * 清除按钮点击后执行
      */
-    $('#clean-divice').on('click',function(){
+    $('#clean-buydivice').on('click',function(){
         $('#buyer').val('');
         $('#d_id').val('');
         $('#low_money').val('');
@@ -233,17 +235,17 @@ $(function(){
         sortOrder : 'DESC',
         remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
-            if(obj.editRow != undefined){
-                $('#table-buydevice').datagrid('endEdit',obj.editRow);
+            if(obj_buydevice.editRow != undefined){
+                $('#table-buydevice').datagrid('endEdit',obj_buydevice.editRow);
             }
-            if(obj.editRow == undefined){
-                $('#save,#redo').show();
-                obj.editRow = rowIndex;
+            if(obj_buydevice.editRow == undefined){
+                $('#save_buydevice,#redo_buydevice').show();
+                obj_buydevice.editRow = rowIndex;
                 $('#table-buydevice').datagrid('beginEdit',rowIndex);
             }
         },
         onAfterEdit : function (index, rowData, change) {
-            $('#save,#redo').hide();
+            $('#save_buydevice,#redo_buydevice').hide();
             var inserted = $('#table-buydevice').datagrid('getChanges','inserted');
             var updated = $('#table-buydevice').datagrid('getChanges','updated');
 
@@ -267,7 +269,7 @@ $(function(){
                                 title : '提示',
                                 msg : '新增成功!',
                             });
-                            obj.editRow = undefined;
+                            obj_buydevice.editRow = undefined;
                         }else{
                             $('#table-buydevice').datagrid('loaded');
                             $('#table-buydevice').datagrid('load');
@@ -301,13 +303,13 @@ $(function(){
                                 msg : '修改成功!',
                             });
                         }
-                        obj.editRow = undefined;
+                        obj_buydevice.editRow = undefined;
                     },
                 });
             }
 
             if(inserted.length == 0 && updated.length == 0){
-                obj.editRow = undefined;
+                obj_buydevice.editRow = undefined;
             }
         },
 

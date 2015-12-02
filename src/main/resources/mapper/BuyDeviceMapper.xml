@@ -6,7 +6,7 @@
     <result column="buyer" property="buyer" jdbcType="VARCHAR" />
     <result column="d_id" property="d_id" jdbcType="INTEGER" />
     <result column="b_money" property="b_money" jdbcType="DOUBLE" />
-    <result column="b_time" property="b_time" jdbcType="TIME" />
+    <result column="b_time" property="b_time" jdbcType="TIMESTAMP" />
     <result column="b_mark" property="b_mark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >

@@ -11,7 +11,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 
-<div id="tb-divice" style="padding: 5px;">
+<div id="tb-device" style="padding: 5px;">
   <div style="margin-bottom: 5px;">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add"    plain="true" onclick="obj_device.add();">增加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit"   plain="true" onclick="obj_device.edit();">修改</a>

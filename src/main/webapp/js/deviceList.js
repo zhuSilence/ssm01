@@ -177,7 +177,7 @@ $(function(){
         pageList : [5,10,15],
         sortName : 'id',
         sortOrder : 'DESC',
-        //remoteSort : false,
+        remoteSort : false,
         onDblClickRow : function(rowIndex, rowData){
             if(obj_device.editRow != undefined){
                 $('#table-device').datagrid('endEdit',obj_device.editRow);
