@@ -1,10 +1,8 @@
 package com.silence.service.impl;
 
-import com.silence.mapper.DeviceMapper;
 import com.silence.mapper.extend.DeviceMapperExtend;
 import com.silence.po.Device;
 import com.silence.service.DeviceService;
-import com.silence.utils.MD5Util;
 import com.silence.utils.Pageable;
 import com.silence.vo.UserQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,6 @@ public class DeviceManager implements DeviceService{
     @Autowired
     private DeviceMapperExtend deviceMapperExtend;
 
-    @Autowired
-    private DeviceMapper deviceMapper;
 
     /**
      * 查询所有符合条件的设备
