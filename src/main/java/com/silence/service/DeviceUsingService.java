@@ -1,6 +1,6 @@
 package com.silence.service;
 
-import com.silence.po.BeUsing;
+import com.silence.po.BeUsingVo;
 import com.silence.utils.Pageable;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface DeviceUsingService {
      * @return
      * @throws Exception
      */
-    public List<BeUsing> getDeviceUsingList(Map<String, Object> map, Pageable pageable) throws Exception;
+    public List<BeUsingVo> getDeviceUsingList(Map<String, Object> map, Pageable pageable) throws Exception;
 
     /**
      * 查询出所有的设备使用记录条数

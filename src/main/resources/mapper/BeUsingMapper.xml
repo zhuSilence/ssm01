@@ -10,7 +10,7 @@
     <result column="is_using" property="is_using" jdbcType="BIT" />
   </resultMap>
 
-  <resultMap id="BaseResultMapVo" type="com.silence.vo.UserQueryVo" >
+  <resultMap id="BaseResultMapVo" type="com.silence.po.BeUsingVo" >
     <id column="be_using.id" property="beUsing.id" jdbcType="INTEGER" />
     <result column="be_using.d_id" property="beUsing.d_id" jdbcType="INTEGER" />
     <result column="be_using.u_place" property="beUsing.u_place" jdbcType="CHAR" />

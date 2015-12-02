@@ -2,6 +2,7 @@ package com.silence.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.silence.po.BeUsing;
+import com.silence.po.BeUsingVo;
 import com.silence.service.DeviceUsingService;
 import com.silence.utils.Page;
 import com.silence.utils.Pageable;
@@ -39,11 +40,11 @@ public class DeviceUsingController {
     public Object getDeviceUsingList(HttpServletRequest request,Pageable pageable) throws Exception{
         Map<String,Object> map = WebUtil.getQueryParameter(request);
         pageable.setPage((pageable.getPage() - 1) * pageable.getRows());
-        List<BeUsing> beUsingList = deviceUsingService.getDeviceUsingList(map, pageable);
-        if (beUsingList != null && beUsingList.size() > 0) {
-            Page<BeUsing> page = new Page<BeUsing>();
+        List<BeUsingVo> beUsingVoList = deviceUsingService.getDeviceUsingList(map, pageable);
+        if (beUsingVoList != null && beUsingVoList.size() > 0) {
+            Page<BeUsingVo> page = new Page<BeUsingVo>();
             page.setTotal(deviceUsingService.getDeviceUsingListSize(map, pageable));
-            page.setRows(beUsingList);
+            page.setRows(beUsingVoList);
             //将生成的json字符串中的boolean的true和false替换为字符串的“true”和“false”
             //否则前台的checkbox不能自动的选中
             return JSON.toJSONString(page).replace("true","\"true\"").replace("false","\"false\"");
