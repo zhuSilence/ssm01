@@ -75,7 +75,7 @@ $(function(){
                         }
                         //与后台交互删除数据
                         $.ajax({
-                            url : '/nav/deleteNav.action',
+                            url : ctx + '/nav/deleteNav.action',
                             type : 'POST',
                             data : {
                                 ids : ids.join(','),
@@ -251,7 +251,7 @@ $(function(){
             //新增用户
             if(inserted.length > 0){
                 $.ajax({
-                    url : '/nav/insertNav.action',
+                    url : ctx +'/nav/insertNav.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,
@@ -284,7 +284,7 @@ $(function(){
             //修改用户
             if(updated.length > 0){
                 $.ajax({
-                    url : '/nav/updateNav.action',
+                    url : ctx + '/nav/updateNav.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,

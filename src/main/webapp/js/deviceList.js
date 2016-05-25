@@ -75,7 +75,7 @@ $(function(){
                         }
                         //与后台交互删除数据
                         $.ajax({
-                            url : '/device/deleteDevice.action',
+                            url :  ctx +'/device/deleteDevice.action',
                             type : 'POST',
                             data : {
                                 ids : ids.join(','),
@@ -116,7 +116,7 @@ $(function(){
     $('#table-device').datagrid({
         width : 650,
         title : '设备列表',
-        url : '/device/getDeviceList.action',
+        url : ctx +'/device/getDeviceList.action',
         striped : true,
         fit : true,
         rownumbers : true,
@@ -196,7 +196,7 @@ $(function(){
             //新增
             if(inserted.length > 0){
                 $.ajax({
-                    url : '/device/insertDevice.action',
+                    url : ctx +'/device/insertDevice.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,
@@ -229,7 +229,7 @@ $(function(){
             //修改用户
             if(updated.length > 0){
                 $.ajax({
-                    url : '/device/updateDevice.action',
+                    url : ctx + '/device/updateDevice.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,

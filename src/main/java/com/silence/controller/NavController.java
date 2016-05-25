@@ -151,4 +151,10 @@ public class NavController {
     public String buydevice(){
         return "buyDevice";
     }
+
+
+    @RequestMapping(value = "/logData.action")
+    public String logData(){
+        return "logData";
+    }
 }

@@ -5,7 +5,7 @@ html,body {
 #north {
     margin: 0;
     padding: 0;
-    background: url("/images/back.png") no-repeat;
+    background: url("../images/back.png") no-repeat;
 }
 #north #info {
     margin-top: 70px;

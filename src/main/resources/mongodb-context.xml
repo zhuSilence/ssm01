@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="
+              http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <context:property-placeholder location="classpath:replace.properties" />
+    <!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
+    <mongo:mongo id="mongo">
+        <mongo:options
+                connections-per-host="${mongo.connectionsPerHost}"
+                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                connect-timeout="${mongo.connectTimeout}"
+                max-wait-time="${mongo.maxWaitTime}"
+                auto-connect-retry="${mongo.autoConnectRetry}"
+                socket-keep-alive="${mongo.socketKeepAlive}"
+                socket-timeout="${mongo.socketTimeout}"
+                slave-ok="${mongo.slaveOk}"
+                write-number="1"
+                write-timeout="0"
+                write-fsync="true"/>
+    </mongo:mongo>
+
+    <mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbname}" username="${mongo.username}" password="${mongo.password}" mongo-ref="mongo"/>
+
+    <!--<mongo:db-factory id="mongoDbFactory" host="${mongo_host}" port="${mongo_port}" dbname="${mongo_dbname}" username="${mongo_username}" password="${mongo_pwd}"/>-->
+    <!--<bean id="secondaryPreferredReadPreference" class="com.mongodb.TaggableReadPreference.SecondaryPreferredReadPreference"></bean>-->
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <!-- 配置读写分离的模式：默认主节点模式，读操作只在主节点，如果主节点不可用，报错或者抛出异常。
+        <property name="readPreference" ref="secondaryPreferredReadPreference"></property>-->
+    </bean>
+
+</beans>

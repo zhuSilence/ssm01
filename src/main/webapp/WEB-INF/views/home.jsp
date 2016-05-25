@@ -43,7 +43,7 @@
 <body>
 
 
-<input type="hidden" value="${ctx}" id="ctx">
+<input type="text" value="${ctx}" id="ctx">
 <script type="text/javascript" src="${ctx}/js/easyui/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/easyui/locale/easyui-lang-zh_CN.js"></script>

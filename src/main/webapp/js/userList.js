@@ -100,7 +100,7 @@ $(function(){
                         }
                         //与后台交互删除数据
                         $.ajax({
-                            url : '/user/deleteUser.action',
+                            url : ctx + '/user/deleteUser.action',
                             type : 'POST',
                             data : {
                                 ids : ids.join(','),
@@ -141,7 +141,7 @@ $(function(){
     $('#table-user').datagrid({
         width : 650,
         title : '用户列表',
-        url : '/user/getUserList.action',
+        url :ctx + '/user/getUserList.action',
         striped : true,
         fit : true,
         rownumbers : true,
@@ -255,7 +255,7 @@ $(function(){
             //新增用户
             if(inserted.length > 0){
                 $.ajax({
-                    url : '/user/insertUser.action',
+                    url :ctx + '/user/insertUser.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,
@@ -288,7 +288,7 @@ $(function(){
             //修改用户
             if(updated.length > 0){
                 $.ajax({
-                    url : '/user/updateUser.action',
+                    url : ctx + '/user/updateUser.action',
                     type : 'POST',
                     data : {
                         'queryParameter.row' : rowData,

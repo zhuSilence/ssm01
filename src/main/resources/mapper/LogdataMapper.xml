@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.silence.mapper.extend.LogDataMapperExtend" >
+  <resultMap id="BaseResultMap" type="com.silence.po.Logdata" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="tester" property="tester" jdbcType="VARCHAR" />
+    <result column="fileurl" property="fileurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    log_id, level, status, tester, fileurl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from logdata
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+
+
+  <!--查询符合条件的所有设备 11.29-->
+  <select id="selectLogDataList" resultMap="BaseResultMap" parameterType="com.silence.vo.UserQueryVo">
+    select
+    <include refid="Base_Column_List" />
+    from logdata
+    <where>
+      <if test="map.tester != null and map.tester != ''">
+        tester LIKE '%${map.tester}%'
+      </if>
+      <if test="map.level != null and map.level != ''">
+        AND level = #{map.level}
+      </if>
+      <if test="map.status != null and map.status != ''">
+        AND #{map.status} = status
+      </if>
+    </where>
+    ORDER BY ${pageable.sort} ${pageable.order}
+
+    limit #{pageable.page,jdbcType=INTEGER},#{pageable.rows,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllDeviceListSize" resultType="java.lang.Integer" parameterType="com.silence.vo.UserQueryVo">
+    select
+    COUNT(*)
+    from logdata
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from logdata
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.silence.po.Logdata" >
+    insert into logdata (log_id, level, status, 
+      tester, fileurl)
+    values (#{logId,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{tester,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.silence.po.Logdata" >
+    insert into logdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="tester != null" >
+        tester,
+      </if>
+      <if test="fileurl != null" >
+        fileurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        #{fileurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.silence.po.Logdata" >
+    update logdata
+    <set >
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        tester = #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null" >
+        fileurl = #{fileurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.silence.po.Logdata" >
+    update logdata
+    set level = #{level,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      tester = #{tester,jdbcType=VARCHAR},
+      fileurl = #{fileurl,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>
