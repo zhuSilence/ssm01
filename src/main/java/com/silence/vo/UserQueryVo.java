@@ -10,7 +10,6 @@ import java.util.Map;
  */
 public class UserQueryVo {
 
-
     //分页对象
     private Pageable pageable;
     //参数map
